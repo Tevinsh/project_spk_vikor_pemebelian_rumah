@@ -70,7 +70,7 @@
                         <div class="post-meta"><span class="small lh-120"><i class="bi bi-geo-alt"></i><%- result[i].alamat_lokasi %>, <%- result[i].wilayah %></span></div>
                         <p class="small lh-120"><%- result[i].deskripsi %></p>
                         <div class="d-flex justify-content-between">
-                            <div class="col pl-0"><span class="text-muted font-small d-block mb-2">Harga</span> <span class="h5 text-dark font-weight-bold">Rp. <%- result[i].harga %></span></div>
+                            <div class="col pl-0"><span class="text-muted font-small d-block mb-2">Harga</span> <span class="h5 text-dark font-weight-bold">Rp. <%- Math.abs(result[i].harga) > 999999 ? Math.sign(result[i].harga)*((Math.abs(result[i].harga)/1000000).toFixed(1)) + 'jt' : Math.sign(result[i].harga)*Math.abs(result[i].harga) %></span></div>
                             <div class="col"><span class="text-muted font-small d-block mb-2">Kamar</span> <span class="h5 text-dark font-weight-bold"><%- result[i].kamar_tidur %></span></div>
                             <div class="col pr-0"><span class="text-muted font-small d-block mb-2">Luas Bangunan</span> <span class="h5 text-dark font-weight-bold"><%- result[i].luas_bangunan %> m2</span></div>
                         </div>

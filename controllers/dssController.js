@@ -198,12 +198,12 @@ async function vikor(weight) {
       attributes : ['alternatif_value'],
       raw : true
     })).map((x)=>{return x.alternatif_value});
-
+    console.log("data1 = "+ data1);
 
     var data = []; 
     var fmax = [];
     var fmin = [];
-    for (var i=0; i<data1[1].length; i++){
+    for (var i=0; i<data1[0].length; i++){
         for (var j=0; j<data1.length; j++){
            //console.log((data1[j][i]));
            data.push(data1[j][i]);
@@ -214,9 +214,9 @@ async function vikor(weight) {
         data = [];
     }
     console.log("fmax = "+fmax+" dan fmin = "+fmin)
-    console.log(data1[1].length,data1.length);
+    console.log(data1[0].length,data1.length);
 
-  for (var i=0; i<data1[1].length; i++){
+  for (var i=0; i<data1[0].length; i++){
       for (var j=0; j<data1.length; j++){
           console.log("j "+(j+1),"i "+(i+1));
           console.log("(("+fmax[i]+"-"+data1[j][i]+")"+"/"+"("+fmax[i]+"-"+fmin[i]+")) *"+weight[i]);
@@ -266,6 +266,9 @@ async function vikor(weight) {
   var V = 0.5;
   for (var i=0; i<S.length; i++){
       var result = V*((S[i]-Smin)/(Splus-Smin))+(1-V)*((R[i]-Rmin)/(Rplus-Rmin));
+      //tambahan jika result 0/0 maka nan handle dengan return 0
+      if(isNaN(result)){result = 0}; 
+      console.log("qresult = "+result);
       Q.push(result);
   }
   console.log("Q = "+Q);

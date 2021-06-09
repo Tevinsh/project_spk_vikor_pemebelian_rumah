@@ -66,7 +66,9 @@ router.get("/session" ,async (req,res)=>{
 
 const dashboard = require('../controllers/dashboardController');
 router.get("/view:id", async (req,res)=>{
-  res.json(await dashboard.rumahView(req,res))
+  //UUagen@agen.com1623085629994
+  res.json(await dashboard.countLihat(req,res));
+  //res.json(await dashboard.rumahView(req,res))
 })
 
 

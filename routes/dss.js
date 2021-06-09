@@ -5,6 +5,7 @@ const { body, param, query, validationResult } = require("express-validator");
 const app = require('../app');
 const path = require('path')
 const vikor = require('../controllers/dssController');
+const dashboard = require('../controllers/dashboardController');
 const {uploadAvatar, uploadRumah,files} = require('../controllers/fileUploadController');
 const { nextTick } = require('process');
 
@@ -16,6 +17,7 @@ router.get("/", async (req,res,next)=>{
     if(req.session.name){
       let hasil = await vikor.makepairwise();
       let result = await vikor.getResult(req,res);
+      console.log(result);
       req.session.error = null;
       res.render("../views/pages/DSS",{name :req.session.name, error: error,pagetitle:pagetitle, result : hasil, result2 : result,session:req.session});
     }else{
@@ -24,7 +26,7 @@ router.get("/", async (req,res,next)=>{
     }
     req.session.error = null;
     //console.log(await result.alternatif);
-    res.render("../views/pages/DSS",{name :req.session.name, error: error,pagetitle:pagetitle, result : hasil, result2 : result,session:req.session});
+    //res.render("../views/pages/DSS",{name :req.session.name, error: error,pagetitle:pagetitle, result : hasil, result2 : result,session:req.session});
 })
 
 
@@ -44,6 +46,11 @@ router.post("/dsspost" ,async (req,res)=>{
     //res.json(await vikor.getAlternatif());
   
   
+  })
+
+  router.get("/reset",async (req,res)=>{
+    await dashboard.resetdss(req,res);
+    res.redirect('/dss')
   })
 
 

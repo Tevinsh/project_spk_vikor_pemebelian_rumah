@@ -69,6 +69,10 @@ module.exports = function(sequelize, DataTypes) {
     imgPath: {
       type: DataTypes.JSON,
       allowNull: true
+    },
+    dilihat: {
+      type: DataTypes.BIGINT,
+      allowNull: true
     }
   }, {
     sequelize,

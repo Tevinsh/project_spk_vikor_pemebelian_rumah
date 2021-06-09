@@ -19,6 +19,7 @@ router.get("/view:id",async (req,res)=>{
     let pagetitle = "rumah";
     req.session.error = null;
     let result = await dashboard.rumahView(req,res);
+    await dashboard.countLihat(req,res);
     //res.json(result);
     res.render("../views/pages/propertiview",{name :req.session.name, error: error, pagetitle:pagetitle,result : result,session : req.session});
 })

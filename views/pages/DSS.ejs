@@ -3,10 +3,9 @@
   <%- include("../layout/head.ejs") -%>  
   <%- include("../layout/nav.ejs") -%>
 <body>
-<% if(session.user_type == "pembeli") {%>}
-<% if (name) {%>
+<% if(session.user_type == "pembeli") {%>
 <!-- validasi apakah result ada-->
-<% if(!result2) { %>
+<% if(result2.result == null || result2.result == undefined) { %>
 
   <div class="container" style="margin-top: 2em;">
     <h1 class="mb-4">Mencari Rumah</h1>
@@ -141,7 +140,11 @@
        
       </div> -->
        <div class="container">
-       <h3 class="my-4 text-center">Rekomendasi Berdasarkan Rangking</h3>
+        <div>
+          <h3 class="my-4 text-center" class = "text-center">Rekomendasi Berdasarkan Rangking</h3>
+          <small class="float-right"><a href="/dss/reset"><i class="bi bi-arrow-counterclockwise"></i> Mulai ulang</a></small><br>
+        </div>
+       
        <% for(var i = 0; i<result2.result.alternatif.length; i++) {%>
        <div class="card mb-3" style = "flex-direction: row;">
         <img src = "https://via.placeholder.com/50" style = "width: 6cm; height:3.5cm">  
@@ -169,7 +172,7 @@
 
       
       <% } %> <!-- akhir validasi-->
-      <% } %>
+      
 
       <%}else {%>
 
