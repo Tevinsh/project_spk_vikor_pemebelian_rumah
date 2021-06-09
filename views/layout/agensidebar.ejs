@@ -1,0 +1,51 @@
+<div class="container-fluid mt-3">
+    <div class="row">
+      <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+        <div class="sidebar-sticky">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a 
+              class="nav-link <% if (pagetitle == "agen"){ %>
+                active
+             <% } %>" href="/agen/dashboard">
+                <i class="bi bi-speedometer mr-2"></i>
+                Dasbor <% if (pagetitle == "agen"){ %>
+                  <span class="sr-only">(current)</span>
+               <% } %>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link <% if (pagetitle == "rumah"){ %>
+                active
+             <% } %>" href="/agen/rumah">
+                <i class="bi bi-kanban mr-2"></i>
+                Manajemen Rumah <% if (pagetitle == "rumah"){ %>
+                  <span class="sr-only">(current)</span>
+               <% } %>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link <% if (pagetitle == "lihat"){ %>
+                active
+             <% } %>" href="/agen/lihat">
+                <i class="bi bi-eye mr-2"></i>
+                Lihat Rumah <% if (pagetitle == "lihat"){ %>
+                  <span class="sr-only">(current)</span>
+               <% } %>
+              </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <% if (pagetitle == "akun"){ %>
+                  active
+               <% } %>" href="/agen/akun">
+                    <i class="bi bi-person mr-2"></i>
+                  Akun <% if (pagetitle == "akun"){ %>
+                    <span class="sr-only">(current)</span>
+                 <% } %>
+                </a>
+              </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+</div>

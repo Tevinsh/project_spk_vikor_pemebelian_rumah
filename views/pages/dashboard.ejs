@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<%- include("../layout/head.ejs") -%>
+<body>
+  <% if (error) { %>
+    <script>
+      function error() {
+              alert('<%- error %>');
+          }
+      window.onload = error;
+    </script>
+  <% } %>
+
+<%- include("../layout/nav.ejs") -%>
+
+<div class="jumbotron" style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 100%), url(/assets/naomi-hebert-MP0bgaS_d1c-unsplash.jpg); background-size: 100%;padding-top: 10%;padding-bottom: 15%; height: 100vh;">
+        <h1 class="display-4 text-center text-light">Selamat Datang</h1>
+        <p class="lead text-center text-light">Aplikasi ini memudahkan anda untuk menemukan rumah yang sangat cocok untuk anda.</p>
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8">
+            <form class="card card-sm my-2">
+                <div class="card-body row no-gutters align-items-center">
+                    <div class="col-auto">
+                      <i class="bi bi-search"></i>
+                    </div>
+                    <!--end of col-->
+                    <div class="col">
+                        <input class="form-control form-control-lg form-control-borderless" name="search" type="search" placeholder="Cari rumah">
+                    </div>
+                    <!--end of col-->
+                    <div class="col-auto mx-2">
+                      <select class="form-control" id="exampleFormControlSelect1" placeholder="wilayah">
+                        <option>Berdasarkan Wilayah</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                      </select>
+                    </div>
+                    <div class="col-auto">
+                      <button class="btn btn-lg btn-primary" type="submit">Cari</button>
+                    </div>
+                    
+                    <!--end of col-->
+                </div>
+            </form>
+        </div>
+        <!--end of col-->
+    </div> 
+</div>
+
+
+
+  <div class="container mb-4">
+    <h5 class="text-center mb-4">Alternatif Rumah</h5>
+    <% if (result.length !== 0) { %>
+    <section class="pt-5 pb-5">
+      <div class="container">
+        <div class="row mb-md-2">
+          <% for (var i = 0; i < result.length; i++) { %>
+            <div class="col-md-6 col-lg-4">
+                <div class="card shadow-sm border-light mb-4">
+                    <a href="/dashboard/view<%-result[i].id_rumah%>" class="position-relative">
+                        <img src="/uploads/rumah_image/<%- result[i].imgPath[0]%>" class="card-img-top" alt="image" width="350" height="200"> </a>
+                    <div class="card-body">
+                        <a href="/dashboard/view<%-result[i].id_rumah%>">
+                            <h5 class="font-weight-normal"><%- result[i].judul_iklan %></h5>
+                        </a>
+                        <div class="post-meta"><span class="small lh-120"><i class="bi bi-geo-alt"></i><%- result[i].alamat_lokasi %>, <%- result[i].wilayah %></span></div>
+                        <p class="small lh-120"><%- result[i].deskripsi %></p>
+                        <div class="d-flex justify-content-between">
+                            <div class="col pl-0"><span class="text-muted font-small d-block mb-2">Harga</span> <span class="h5 text-dark font-weight-bold">Rp. <%- result[i].harga %></span></div>
+                            <div class="col"><span class="text-muted font-small d-block mb-2">Kamar</span> <span class="h5 text-dark font-weight-bold"><%- result[i].kamar_tidur %></span></div>
+                            <div class="col pr-0"><span class="text-muted font-small d-block mb-2">Luas Bangunan</span> <span class="h5 text-dark font-weight-bold"><%- result[i].luas_bangunan %> m2</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          <% } %>
+        </div>
+      <!--  <div class="row py-4 mt-md-5">
+            <div class="col text-center">
+                <a href="#" class="btn btn-lg shadow btn-primary mt-1">Browse all</a>
+            </div>
+        </div> -->
+    </div>
+    </section>
+    <% } else { %>
+      <h5>Data tidak ditemukan</h5>
+    <% } %>
+    
+  </div>
+  
+                      
+      </div>
+  </div>
+</div>
+ 
+<%- include("../layout/footer.ejs") -%>
+
+</body>
+</html>

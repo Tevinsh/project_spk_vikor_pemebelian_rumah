@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<%- include("../../layout/head.ejs") -%>
+<style>
+
+body {
+  font-size: .875rem;
+}
+
+.feather {
+  width: 16px;
+  height: 16px;
+  vertical-align: text-bottom;
+}
+
+/*
+ * Sidebar
+ */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100; /* Behind the navbar */
+  padding: 0;
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+.sidebar-sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 48px; /* Height of navbar */
+  height: calc(100vh - 48px);
+  padding-top: 1.2rem;
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+.sidebar .nav-link {
+  font-weight: 500;
+  color: #333;
+}
+
+.sidebar .nav-link .feather {
+  margin-right: 4px;
+  color: #999;
+}
+
+.sidebar .nav-link.active {
+  color: #007bff;
+}
+
+.sidebar .nav-link:hover .feather,
+.sidebar .nav-link.active .feather {
+  color: inherit;
+}
+
+.sidebar-heading {
+  font-size: .75rem;
+  text-transform: uppercase;
+}
+
+
+
+
+
+/*
+ * Utilities
+ */
+
+.border-top { border-top: 1px solid #e5e5e5; }
+.border-bottom { border-bottom: 1px solid #e5e5e5; }
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script>
+   $(function(){
+            $("input[type = 'file']").change(function(){
+               var $fileUpload = $("input[type='file']");
+               if (parseInt($fileUpload.get(0).files.length) > 3){
+                  alert("Maksimal Upload 3 Foto");
+                  $("input[type = 'file']").val('');
+               }
+            });
+         });
+</script>
+<body>
+  <% if (error) { %>
+    <script>
+      function error() {
+              alert('<%- error %>');
+          }
+      window.onload = error;
+    </script>
+  <% } %>
+
+<%- include("../../layout/nav.ejs") -%>
+
+<%- include("../../layout/agensidebar.ejs") -%>
+
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+          <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ol class="breadcrumb">
+                        <li class="active"><i class="fa fa-dashboard"></i> Manajemen Rumah</li>
+                    </ol>
+                    <h1>Daftar</h1>
+                </div>
+            </div>
+            <hr>
+            <form method="POST" action='/bodychecker3' enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="luas_bangunan">Luas Bangunan</label>
+                <input type="text" class="form-control" id="luas_bangunan" name="luas_bangunan">
+              </div>
+            <div class="form-group">
+                <label for="luas_tanah">Luas Tanah</label>
+                <input type="text" class="form-control" id="luas_tanah"name="luas_tanah">
+            </div>
+            <div class="form-group">
+                <label for="kamar_tidur">Kamar Tidur</label>
+                <input type="text" class="form-control" id="kamar_tidur" name = "kamar_tidur">
+            </div>
+            <div class="form-group">
+                <label for="kamar_mandi">Kamar mandi</label>
+                <input type="text" class="form-control" id="kamar_mandi" name= "kamar_mandi">
+            </div>
+            <div class="form-group">
+                <label for="lantai">lantai</label>
+                <input type="text" class="form-control" id="lantai" name = "lantai">
+            </div>
+            <div class="form-group">
+                <label for="pwd">Fasilitas</label><br>
+                <label class="checkbox-inline"><input type="checkbox" value="AC" name="fasilitas">  AC</label><br>
+                <label class="checkbox-inline"><input type="checkbox" value="Kolam Renang" name="fasilitas">  Kolam Renang</label><br>
+                <label class="checkbox-inline"><input type="checkbox" value="Carport" name="fasilitas">  Carport</label><br>
+                <label class="checkbox-inline"><input type="checkbox" value="Taman" name="fasilitas">  Taman</label><br>
+                <label class="checkbox-inline"><input type="checkbox" value="Garasi" name="fasilitas">  Garasi</label><br>
+                <label class="checkbox-inline"><input type="checkbox" value="Telepon" name="fasilitas">  Telepon</label><br>
+                <label class="checkbox-inline"><input type="checkbox" value="PAM" name="fasilitas">  PAM</label><br>
+                <label class="checkbox-inline"><input type="checkbox" value="Water Heater" name="fasilitas">  Water Heater</label><br>
+                <label class="checkbox-inline"><input type="checkbox" value="Kulkas" name="fasilitas">  Kulkas</label><br>
+                <label class="checkbox-inline"><input type="checkbox" value="Kompor" name="fasilitas">  Kompor</label><br>
+                <label class="checkbox-inline"><input type="checkbox" value="Microwave" name="fasilitas">  Microwave</label><br>
+                <label class="checkbox-inline"><input type="checkbox" value="Oven" name="fasilitas">  Oven</label><br>
+                <label class="checkbox-inline"><input type="checkbox" value="APAR" name="fasilitas">  APAR</label><br>
+                <label class="checkbox-inline"><input type="checkbox" value="Gordyn" name="fasilitas">  Gordyn</label><br>
+            </div>
+            <div class="form-group">
+                <label for="jenis_sertifikasi">sertifikasi</label>
+                <input type="text" class="form-control" id="jenis_sertifikasi" name="jenis_sertifikasi">
+            </div>
+            <div class="form-group">
+                <label for="alamat_lokasi">alamat lokasi</label>
+                <input type="text" class="form-control" id="alamat_lokasi" name = "alamat_lokasi">
+            </div>
+            <div class="form-group">
+                <label for="judul_iklan">judul iklan</label>
+                <input type="text" class="form-control" id="judul_iklan" name="judul_iklan">
+            </div>
+            <div class="form-group">
+                <label for="deskripsi">Deskripsi</label>
+                <textarea class="form-control" rows="5" id="judul_iklan" name="deskripsi"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="harga">Harga</label>
+                <input type="text" class="form-control" id="harga" name="harga">
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="customFile">Foto Rumah</label>
+              <input type="file" class="form-control" id="customFile" accept='image/*' name="imgupload" multiple />
+          </div>
+
+
+<br> 
+            <h3 class="d-inline">Form Alternatif</h3>
+            <small>untuk mengidentifikasi rumah anda pada saat aplikasi mencarikan rumah pelanggan</small>
+            <hr>
+
+            <!-- get kriteria -->
+
+            <% for(var i = 0;i<kriteria.length;i++) { %>
+              <% if(kriteria[i].opsi){ %>
+                <div class="form-group">
+                  <label for="<%- kriteria[i].nama_kriteria %>"><%- kriteria[i].kuesioner %></label>
+                  <select class="form-control" id="value" name="value">
+                   <% for(var j = 0; j<kriteria[i].opsi.length;j++){ %>
+                    <option value = "<%- kriteria[i].value[j] %>"><%- kriteria[i].opsi[j] %></option>
+                    <% } %>
+                  </select>
+                </div>
+              <% }else { %>
+                <div class="form-group">
+                  <label for="<%- kriteria[i].nama_kriteria %>"><%- kriteria[i].kuesioner %></label>
+                  <input type="number" class="form-control" id="<%- kriteria[i].nama_kriteria %>" name= "value">
+              </div>
+              <% } %>
+
+
+              <% } %>
+            <!-- end get kriteria -->
+            <button class="btn btn-sm btn-primary btn-primary mr-2 float-right" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Simpan</button><br><br>
+            </form>
+      </main>
+    </div>
+  </div>
+ 
+<%- include("../../layout/footer.ejs") -%>
+
+</body>
+</html>

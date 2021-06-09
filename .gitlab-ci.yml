@@ -1,0 +1,33 @@
+stages:
+  - build-deploy
+  
+variables:
+  TAG_COMMIT: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:$CI_COMMIT_SHORT_SHA
+
+build-deploy:
+  image: docker:latest
+  stage: build-deploy
+  only: 
+    - development
+  services:
+    - docker:dind
+  script:
+    - echo SERVICE_NAME=Express.JS API Boilerplate >> .env
+    - echo SERVICE_PORT=$DEV_SERVICE_PORT >> .env
+    - echo FUSIONAUTH_URL= >> .env
+    - echo DB_HOST=$DEV_DB_HOST >> .env
+    - echo DB_USER=$DEV_DB_USER >> .env
+    - echo DB_PASS=$DEV_DB_PASS >> .env
+    - echo DB_NAME=$DEV_DB_NAME >> .env
+    - echo DB_PORT=$DEV_DB_PORT >> .env
+  
+    - docker build -t $TAG_COMMIT .
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker push $TAG_COMMIT
+    - apk add --update openssh-client bash
+    - eval $(ssh-agent -s)
+    - bash -c 'ssh-add <(echo "$DEV_SSH_KEY")'
+    - ssh -o StrictHostKeyChecking=no $DEV_SSH_USER@$DEV_SSH_HOST -p $DEV_SSH_PORT "sudo docker stop api-ikimodal-cicilan || true"
+    - ssh -o StrictHostKeyChecking=no $DEV_SSH_USER@$DEV_SSH_HOST -p $DEV_SSH_PORT "sudo docker container rm -f api-ikimodal-cicilan || true"
+    - ssh -o StrictHostKeyChecking=no $DEV_SSH_USER@$DEV_SSH_HOST -p $DEV_SSH_PORT "sudo docker pull $TAG_COMMIT"
+    - ssh -o StrictHostKeyChecking=no $DEV_SSH_USER@$DEV_SSH_HOST -p $DEV_SSH_PORT "sudo docker run --name api-ikimodal-cicilan --network internal-network --restart=always --ip 10.10.1.96 -p 3070:3070 -it -d $TAG_COMMIT "

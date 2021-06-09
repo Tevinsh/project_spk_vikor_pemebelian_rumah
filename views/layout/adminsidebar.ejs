@@ -1,0 +1,50 @@
+<div class="container-fluid mt-3">
+    <div class="row">
+      <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+        <div class="sidebar-sticky">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link <% if (pagetitle == "dashboard"){ %>
+                active
+             <% } %>" href="/admin/dashboard">
+                <i class="bi bi-speedometer mr-2"></i>
+                Dasbor <% if (pagetitle == "dashboard"){ %>
+                  <span class="sr-only">(current)</span>
+               <% } %>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link <% if (pagetitle == "kriteria"){ %>
+                active
+             <% } %>" href="/admin/kriteria">
+                <i class="bi bi-kanban mr-2"></i>
+                Manajemen Kriteria <% if (pagetitle == "kriteria"){ %>
+                  <span class="sr-only">(current)</span>
+               <% } %>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link <% if (pagetitle == "lihat"){ %>
+                active
+             <% } %>" href="/admin/lihat">
+                <i class="bi bi-eye mr-2"></i>
+                Manajemen rumah <% if (pagetitle == "lihat"){ %>
+                  <span class="sr-only">(current)</span>
+               <% } %>
+              </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <% if (pagetitle == "akun"){ %>
+                  active
+               <% } %>" href="/admin/akun">
+                    <i class="bi bi-person mr-2"></i>
+                    Manajemen user <% if (pagetitle == "akun"){ %>
+                      <span class="sr-only">(current)</span>
+                   <% } %>
+                </a>
+              </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+</div>

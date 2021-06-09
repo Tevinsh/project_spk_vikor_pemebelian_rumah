@@ -1,0 +1,121 @@
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
+      <a class="navbar-brand" href="http://localhost:8080/dashview"><img src="/assets/favicon.png" width="32" height="32"> SPK</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item <% if (pagetitle == "Dashboard"){ %>
+                active
+             <% } %>">
+            <a class="nav-link" href="http://localhost:8080/dashboard">Cari Rumah <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item <% if (pagetitle == "DSS"){ %>
+            active
+         <% } %>">
+            <a class="nav-link" href="http://localhost:8080/dss">DSS</a>
+          </li>
+          <li class="nav-item <% if (pagetitle == "tentang"){ %>
+            active
+         <% } %>">
+            <a class="nav-link" href="/dashboard/tentang">Tentang</a>
+          </li>
+          <li class="nav-item <% if (pagetitle == "panduan"){ %>
+            active
+         <% } %>">
+            <a class="nav-link" href="/dashboard/panduan">Panduan</a>
+          </li>
+        </ul>
+        <% if (session.name) {%>
+          <div class="dropdown">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><i class="bi bi-person-circle"></i>
+              <%- session.name %>
+            </button>
+            <div class="dropdown-menu">
+              <!-- check user type -->
+              <% if(session.user_type == "agen") {%>
+              <a class="dropdown-item" href="http://localhost:8080/agen/dashboard">Halaman Agen</a>
+              <a class="dropdown-item" href="http://localhost:8080/user/logout">Logout</a>
+              <% }else if(session.user_type == "admin"){ %>
+                <a class="dropdown-item" href="http://localhost:8080/admin/dashboard">Halaman Admin</a>
+                <a class="dropdown-item" href="http://localhost:8080/user/logout">Logout</a>
+                <% }else{ %>
+                  <a class="dropdown-item" href="http://localhost:8080/user/profile">profile</a>
+                  <a class="dropdown-item" href="http://localhost:8080/user/logout">Logout</a>
+                  <%}%>
+            </div>
+          </div>
+          <%} else{%>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalLogin">
+                <i class="bi bi-person-circle"></i> login/signup
+            </button>
+          <% } %>
+      </div>
+    </nav>
+    
+
+    <!-- Login Modal -->
+  <div class="modal fade" id="myModalLogin">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header  -->
+        <div class="modal-header">
+          <h4 class="modal-title">Login</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div> 
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+          
+            <form action="/user/login" method="POST">
+              <label for="exampleInputEmail1">Email address</label>
+              <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+              <label for="exampleInputPassword1">Password</label>
+              <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+              <small id="emailHelp" class="form-text text-muted">Tidak punya akun?  <span class="text-primary" id="hoverpointer" data-toggle="modal" data-target="#myModalSignup">Daftar Sekarang</span></small>
+              <button type="submit" class="btn btn-primary btn-block mt-4">Login</button>
+            </form>
+        </div>                          
+      </div>
+    </div>
+  </div>
+
+  <!-- Signup Modal-->
+  <div class="modal fade" id="myModalSignup">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Sign up</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div> 
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <div class="container">
+            <form action="/user/signup" method="POST">
+                  <label for="exampleInputEmail1">Email address</label>
+                  <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                  <label for="exampleInputPassword1">Password</label>
+                  <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                  <label for="exampleInputPassword1">Retype Password</label>
+                  <input type="password" name="retypepass" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                  <label for="exampleInputEmail1">No Telp</label>
+                  <input type="text" name="telepon" class="form-control" id="telepon" aria-describedby="emailHelp" placeholder="Nomor Telepon">
+                  <p class="mt-4">Daftar Sebagai</p>
+                  <input type="radio" name="tipe" id="agen" value="agen">
+                  <label for="agen">Agen/developer</label>
+                  <br>
+                  <input type="radio" name="tipe" id="pembeli" value="pembeli">
+                  <label for="pembeli">pembeli</label>
+                  <br>
+                  </div>
+                <button type="submit" class="btn btn-primary btn-block mt-4">Sign Up</button>
+              </form>
+            </div>
+        </div>
+
+  </header>

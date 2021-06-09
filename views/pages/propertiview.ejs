@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<%- include("../layout/head.ejs") -%>
+<body>
+  <% if (error) { %>
+    <script>
+      function error() {
+              alert('<%- error %>');
+          }
+      window.onload = error;
+    </script>
+  <% } %>
+
+<%- include("../layout/nav.ejs") -%>
+
+<div id="demo" class="carousel slide" data-ride="carousel">
+
+    <!-- Indicators -->
+    <ul class="carousel-indicators">
+      <% for(var j = 0; j<result.rumah.imgPath.length;j++) {%>
+      <li data-target="#demo" data-slide-to="<%-j%>" <%if(j==0){%>
+        class="active"
+        <%}%>
+        ></li>
+      <%}%>
+    </ul>
+  
+    <!-- The slideshow -->
+    <div class="carousel-inner">
+      <% for(var i = 0; i<result.rumah.imgPath.length;i++) {%>      
+      <div class="carousel-item <% if(i==0){%>
+        active
+      <%}%> ">
+        <img class="d-block mx-auto" src="/uploads/rumah_image/<%- result.rumah.imgPath[i]%>" alt="<%- result.rumah.imgPath[i]%>">
+      </div>
+      <%}%>
+    </div>
+  
+    <!-- Left and right controls -->
+    <a class="carousel-control-prev" href="#demo" data-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#demo" data-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </a>
+  
+  </div>
+
+
+  <!-- informasi -->
+
+  <div class="container-fluid mt-4">
+
+    <div class="row">
+  		<div class="col-sm-9 sticky-top"><!--left col-->
+              
+
+      <div class="mb-3 mx-3">
+      <h3>Rp. <%- result.rumah.harga %></h3>
+      <h6><%- result.rumah.judul_iklan %></h6>
+      <small><%- result.rumah.alamat_lokasi %> , <%- result.rumah.wilayah %></small><br>
+      <small>Pengembang : <a href="#"> Adi Jaya Bangunan </a></small><br><hr>
+      <div class="d-flex justify-content-around text-center">
+        <div>
+          <small>luas tanah</small>
+          <h5><%- result.rumah.luas_tanah %> m2</h5>
+        </div>
+        <div>
+          <small>luas bangunan</small>
+          <h5><%- result.rumah.luas_bangunan %> m2</h5>
+        </div>
+        <div>
+          <small>kamar tidur</small>
+          <h5><%- result.rumah.kamar_tidur %></h5>
+        </div>
+        <div>
+          <small>kamar mandi</small>
+          <h5><%- result.rumah.kamar_mandi %></h5>
+        </div>
+        <div>
+          <small>jenis sertifikasi</small>
+          <h5><%- result.rumah.jenis_sertifikasi %></h5>
+        </div>
+      </div>
+      <hr>
+      <h5><%- result.rumah.judul_iklan %></h5>
+      <p><%- result.rumah.deskripsi %></p>
+      <hr>
+      <h5>Fasilitas</h5>
+      <ul>
+        <% for(var k = 0;k<result.rumah.fasilitas.length;k++) {%>
+        <li><%-result.rumah.fasilitas[k]%></li>
+        <% } %>
+      </ul>
+      
+      </div>
+          
+        </div><!--/col-3-->
+    	<div class="col-sm-3 my-2">
+        <div class="card">
+          <div class="row card-body d-flex justify-content-center text-center">
+            <h3>Adi Jaya Bangunan</h3>
+            <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" width="150" height="150" class="avatar img-circle img-thumbnail my-2" alt="avatar">
+            <h6>lorem ipsum dolor sit almet kajhsdjshjdhsjhdjshdjshdjhsjdh</h6>
+          </div>
+          <div class="card-footer d-flex justify-content-around">
+            <button type="button" class="btn btn-warning"><i class="bi bi-telephone"></i> Hubungi</button>
+            <button type="button" class="btn btn-danger"><i class="bi bi-heart-fill"></i> Sukai </button>
+          </div>
+        </div>
+            
+        </div><!--/col-9-->
+    </div><!--/row-->
+                                                      
+ 
+<%- include("../layout/footer.ejs") -%>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

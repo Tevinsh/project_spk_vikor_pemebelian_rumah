@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<%- include("../../layout/head.ejs") -%>
+<style>
+
+body {
+  font-size: .875rem;
+}
+
+.feather {
+  width: 16px;
+  height: 16px;
+  vertical-align: text-bottom;
+}
+
+/*
+ * Sidebar
+ */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100; /* Behind the navbar */
+  padding: 0;
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+.sidebar-sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 48px; /* Height of navbar */
+  height: calc(100vh - 48px);
+  padding-top: 1.2rem;
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+.sidebar .nav-link {
+  font-weight: 500;
+  color: #333;
+}
+
+.sidebar .nav-link .feather {
+  margin-right: 4px;
+  color: #999;
+}
+
+.sidebar .nav-link.active {
+  color: #007bff;
+}
+
+.sidebar .nav-link:hover .feather,
+.sidebar .nav-link.active .feather {
+  color: inherit;
+}
+
+.sidebar-heading {
+  font-size: .75rem;
+  text-transform: uppercase;
+}
+
+
+
+
+
+/*
+ * Utilities
+ */
+
+.border-top { border-top: 1px solid #e5e5e5; }
+.border-bottom { border-bottom: 1px solid #e5e5e5; }
+</style>
+
+<body>
+    
+    
+  <% if (error) { %>
+    <script>
+      function error() {
+              alert('<%- error %>');
+          }
+      window.onload = error;
+    </script>
+  <% } %> 
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+  <script>
+    $(document).ready(function(){
+        $('input[type="checkbox"]').click(function(){
+            if($(this).is(":checked")){
+                console.log("Checkbox is checked.");
+            }
+            else if($(this).is(":not(:checked)")){
+                console.log("Checkbox is unchecked.");
+            }
+        });
+
+    $("#skala").change(function() {
+    if(this.checked) {
+      $('#jmlfield').prop( "disabled", false ) ;
+    }else{
+      $('#jmlfield').prop( "disabled", true ) ;
+    }
+    });
+    $("#jmlkriteria").change(function() {
+      var jml = $("#jmlfield").val();
+      console.log(jml);
+      var i;
+      $("#opsi").empty();
+      for (i = 0; i<jml ; i++){
+        $("#opsi").append(' <div class="form-group col-md-6"><input type="text" class="form-control" id="kriteria" placeholder="Opsi '+(i+1)+'" name = "opsi"></div><div class="form-group col-md-6"><input type="number" class="form-control" id="kriteria" placeholder="value" name = "value"></div>')
+      } 
+    });
+    });
+
+  
+    </script>
+
+<%- include("../../layout/nav.ejs") -%>
+
+<%- include("../../layout/adminsidebar.ejs") -%>
+
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+          <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>Kriteria <small>Manajemen Kriteria</small></h1>
+                    <ol class="breadcrumb">
+                        <li class="active"><i class="fa fa-dashboard"></i> Dashboard</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <hr>
+            <form action="/bodychecker1" method="POST">
+              <div class="form-row">
+                <div class="form-group col-md">
+                  <input type="text" class="form-control" id="kriteria" placeholder="Tambah Kriteria" name = "nama_kriteria">
+                </div>
+                <div class="form-group col-md">
+                  <input type="checkbox" id="skala" value="Bike">
+                  <label for="skala"> punya Opsi</label>
+                </div>
+                <div class="form-group col-md" id="jmlkriteria">
+                <input type="number" class="form-control" id="jmlfield" placeholder="jumlah Opsi" disabled>
+                </div>
+                <div class="form-group col-md">
+                  <button class="btn btn-primary btn-success mr-2" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Simpan</button>
+                  </div>
+              </div>
+
+              <div class="form-group">
+                <label for="kuesioner">Pertanyaan Kuesioner</label>
+                <input type="text" class="form-control" id="kuesioner" placeholder="Isi Pertanyaan kuesioner" name = "kuesioner">
+              </div>
+
+              <div class="form-row" id = "opsi">
+             
+                  
+              </div>
+              
+                </form>
+
+              <h3>Tabel Kriteria</h3><hr>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">nama kriteria</th>
+                    <th scope="col">kuesioner</th>
+                    <th scope="col">opsi</th>
+                    <th scope="col">value</th>
+                    <th scope="col">aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% for(var i = 0;i<kriteria.length;i++){ %>
+                  <tr>
+                    <th scope="row"><%- i+1 %></th>
+                    <td><%- kriteria[i].nama_kriteria %></td>
+                    <td><%- kriteria[i].kuesioner %></td>
+                    <td><%- kriteria[i].opsi %></td>
+                    <td><%- kriteria[i].value %></td>
+                    <td><button type="button" class="btn btn-danger"><i class="bi bi-trash2"></i></button></td>
+                  </tr>
+                  <% } %>
+                </tbody>
+              </table>
+            
+        </div>
+      </main>
+    </div>
+  </div>
+
+ 
+<%- include("../../layout/footer.ejs") -%>
+
+</body>
+</html>

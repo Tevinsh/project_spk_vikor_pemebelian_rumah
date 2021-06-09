@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+  <%- include("../layout/head.ejs") -%>  
+  <%- include("../layout/nav.ejs") -%>
+<body>
+<% if(session.user_type == "pembeli") {%>}
+<% if (name) {%>
+<!-- validasi apakah result ada-->
+<% if(!result2) { %>
+
+  <div class="container" style="margin-top: 2em;">
+    <h1 class="mb-4">Mencari Rumah</h1>
+    <div class="alert alert-success" role="alert">
+      <h4 class="alert-heading">Hi!</h4>
+      <p>Sebelum anda mendapatkan rumah yang cocok dengan kriteria anda,izinkan kami untuk mengetahui kriteria rumah yang anda mau dengan mengisi kuesioner dibawah ini .</p>
+      <hr>
+      <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+    </div>
+
+    <div class="accordion" id="accordionExample">
+      <div class="card">
+        <div class="card-header" id="headingOne">
+          <h2 class="mb-0">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              Kuesioner
+            </button>
+          </h2>
+        </div>
+    
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+          <div class="card-body">
+            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+            <p><%- result.length %></p>
+            <form action="/dss/dsspost" method="POST">
+            <% for(var i = 0; i < result.length; i++) {%>
+            <% if(result[i].value == 1){%>
+               <!-- kuesioner -->
+            <div hidden class="form-row align-items-center">
+              <p class="col-auto my-1">Menurut Saya <%- result[i].j %> </p>
+              <div class="col-auto my-1">
+            
+            <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="value">
+              <option value=null >Choose...</option>
+              <option selected value="1">Sama Pentingnya</option>
+              <option value="2">Sedikit Lebih Penting</option>
+              <option value="3">Penting</option>
+              <option value="4">Sangat Penting</option>
+            </select>
+            </div>
+  
+            <p class="col-auto my-1">dibandingkan dengan <%- result[i].j %></p>
+          </div>
+          <!-- end kuesioner -->
+
+
+            <% }else if(result[i].value == 'hide'){ %>
+
+              <!-- kuesioner -->
+            <div hidden class="form-row align-items-center">
+              <p class="col-auto my-1">Menurut Saya <%- result[i].j %> </p>
+              <div class="col-auto my-1">
+            
+            <select class="custom-select mr-sm-2" name="value" id="inlineFormCustomSelect">
+              <option selected value=null >Choose...</option>
+              <option value=1>Sama Pentingnya</option>
+              <option value=2>Sedikit Lebih Penting</option>
+              <option value=3>Penting</option>
+              <option value=4>Sangat Penting</option>
+            </select>
+            </div>
+  
+            <p class="col-auto my-1">dibandingkan dengan <%- result[i].j %></p>
+          </div>
+          <!-- end kuesioner -->
+          <% }else{ %>
+            <!-- kuesioner -->
+            <div class="form-row align-items-center">
+              <p class="col-auto my-1">Menurut Saya <%- result[i].i %> </p>
+              <div class="col-auto my-1">
+            
+            <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="value">
+              <option selected value=null >Choose...</option>
+              <option value=1>Sama Pentingnya</option>
+              <option value=2>Sedikit Lebih Penting</option>
+              <option value=3>Penting</option>
+              <option value=4>Sangat Penting</option>
+            </select>
+            </div>
+  
+            <p class="col-auto my-1">dibandingkan dengan <%- result[i].j %></p>
+          </div>
+          <!-- end kuesioner -->
+          <% } %>
+          <% } %>
+         
+          <input type="submit" value="Submit">
+        </form>
+
+          </div>
+
+          
+          
+
+
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+
+
+        
+      </div>
+    </div>
+  </div>
+  <% }else{ %> <!-- result ada-->
+   <!--   <div class="container-fluid">
+        
+        <h1 class="mb-4 text-center">Rekomendasi Untuk Anda Berdasarkan Rangking</h1>
+        <div class="row d-flex justify-content-center">
+         
+            <div class="card shadow-sm  mb-4" style = "flex-direction: row;">
+                <h1 class="my-4 mx-4">1</h1>
+                <a href="#" class="position-relative">
+                    <img src="https://via.placeholder.com/500x350/5fa9f8/ffffff" class="card-img-top" alt="image" style = "width: 5cm; height:5cm"> </a>
+                <div class="card-body">
+                    <a href="#">
+                        <h5 class="font-weight-normal"><%- result2.result.alternatif[0].judul_iklan %></h5>
+                    </a>
+                    <div class="post-meta"><span class="small lh-120"><i class="bi bi-geo-alt"></i><%- result2.result.alternatif[0].alamat_lokasi %>, <%- result2.result.alternatif[0].wilayah %></span></div>
+                    <p class="small lh-120"><%- result2.result.alternatif[0].deskripsi %></p>
+                    <div class="d-flex justify-content-between">
+                        <div class="col pl-0"><span class="text-muted font-small d-block mb-2">Harga</span> <span class="h5 text-dark font-weight-bold">Rp. <%- result2.result.alternatif[0].harga %></span></div>
+                        <div class="col"><span class="text-muted font-small d-block mb-2">Kamar</span> <span class="h5 text-dark font-weight-bold"><%- result2.result.alternatif[0].kamar_tidur %></span></div>
+                        <div class="col pr-0"><span class="text-muted font-small d-block mb-2">Luas Bangunan</span> <span class="h5 text-dark font-weight-bold"><%- result2.result.alternatif[0].luas_bangunan %> m2</span></div>
+                    </div>
+                </div>
+            </div>
+       
+      </div> -->
+       <div class="container">
+       <h3 class="my-4 text-center">Rekomendasi Berdasarkan Rangking</h3>
+       <% for(var i = 0; i<result2.result.alternatif.length; i++) {%>
+       <div class="card mb-3" style = "flex-direction: row;">
+        <img src = "https://via.placeholder.com/50" style = "width: 6cm; height:3.5cm">  
+        <div class="card-body">
+
+          <div class = "float-left">
+            <h5><%- i+1 %> <a href="/"><%- result2.result.alternatif[i].judul_iklan %>.</a></h5>
+            <div class="post-meta"><span class="small lh-120"><i class="bi bi-geo-alt"></i><%- result2.result.alternatif[i].alamat_lokasi %>, <%- result2.result.alternatif[i].wilayah %></span></div>
+          </div>
+          <div class = "row float-right">
+            <div class="col pl-0"><span class="text-muted font-small d-block mb-2">Harga</span> <span class="h5 text-dark font-weight-bold">Rp. <%- result2.result.alternatif[i].harga %></span></div>
+            <div class="col"><span class="text-muted font-small d-block mb-2">Kamar</span> <span class="h5 text-dark font-weight-bold"><%- result2.result.alternatif[i].kamar_tidur %></span></div>
+            <div class="col pr-0"><span class="text-muted font-small d-block mb-2">Luas Bangunan</span> <span class="h5 text-dark font-weight-bold"><%- result2.result.alternatif[i].luas_bangunan %> m2</span></div>
+          </div>
+       
+          </div>
+        </div>
+        <% } %>
+        </div>
+          
+      </div>
+
+
+
+
+      
+      <% } %> <!-- akhir validasi-->
+      <% } %>
+
+      <%}else {%>
+
+        <div class="jumbotron" style="height : 100vh;margin-bottom: 0">
+          <h1 class="display-4">Oops!</h1>
+          <p class="lead">Sepertinya anda belum login atau bukan pembeli.</p>
+          <hr class="my-4">
+          <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+          <p class="lead">
+          <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+          </p>
+      </div>
+
+       <%}%>
+  <%- include("../layout/footer.ejs") -%>
+
+
+ 
+</body>
+</html>
