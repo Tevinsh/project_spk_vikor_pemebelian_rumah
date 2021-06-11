@@ -1,5 +1,6 @@
 "use strict";
 const {Sequelize,QueryTypes,Op} = require('sequelize');
+//const { now } = require('sequelize/types/lib/utils');
 const app = require('../app');
 const { models } = require("../components/database");
 
@@ -25,12 +26,12 @@ exports.rumahView = async function (req,res){
     let rumah = await models.rumah.findOne({
         where : {
             id_rumah : req.params.id
-        }
+        },raw : true
     })
     let agen = await models.agen.findOne({
         where : {
             id_agen : rumah.id_agen
-        }
+        },raw : true
     })
     let result = {
         agen,
@@ -73,6 +74,33 @@ exports.resetdss = async function (req,res){
     },{
         where : {
             email : req.session.name
+        }
+    })
+}
+
+exports.sukai = async function (req,res){
+    let input = {
+        id_suka : 'YYY'+Date.now(),
+        id_agen : req.query.agen,
+        id_rumah : req.query.id_rumah,
+        id_pelanggan : req.query.id_pelanggan,
+        waktu : Date.now()
+    }
+    console.log(input);
+    await models.suka.create(input).then(()=>{
+        res.redirect('/dashboard/view'+req.query.id_rumah);
+    }).catch(()=>{
+        req.session.error = "ada masalah pada saat melakukan aksi"
+    })
+}
+
+exports.cekSuka = async function(id_agen,id_rumah,id_pelanggan){
+    console.log("test = "+id_agen+id_rumah+id_pelanggan);
+    return await models.suka.findOne({
+        where : {
+        id_agen : id_agen,
+        id_rumah : id_rumah,
+        id_pelanggan : id_pelanggan
         }
     })
 }

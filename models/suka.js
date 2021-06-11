@@ -2,8 +2,7 @@ const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('suka', {
     id_suka: {
-      autoIncrement: true,
-      type: DataTypes.BIGINT,
+      type: DataTypes.STRING(19),
       allowNull: false,
       primaryKey: true
     },

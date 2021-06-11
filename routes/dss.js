@@ -17,7 +17,7 @@ router.get("/", async (req,res,next)=>{
     if(req.session.name){
       let hasil = await vikor.makepairwise();
       let result = await vikor.getResult(req,res);
-      console.log(result);
+      console.log(JSON.stringify(result));
       req.session.error = null;
       res.render("../views/pages/DSS",{name :req.session.name, error: error,pagetitle:pagetitle, result : hasil, result2 : result,session:req.session});
     }else{

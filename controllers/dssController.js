@@ -156,7 +156,7 @@ async function getAlternatif(req,res) {
   let result = []; 
   let nama_alternatif = await models.alternatif.findAll({
     attributes : [],
-    include : {model : models.rumah ,as:'id_rumah_rumah',attributes : ['id_rumah','nama_rumah','judul_iklan','alamat_lokasi','wilayah','harga','kamar_tidur','luas_bangunan']},
+    include : {model : models.rumah ,as:'id_rumah_rumah',attributes : ['id_rumah','nama_rumah','judul_iklan','alamat_lokasi','wilayah','harga','kamar_tidur','luas_bangunan','imgPath']},
   })
   for(let i = 0; i<nama_alternatif.length ; i++){
     await result.push(
@@ -169,6 +169,7 @@ async function getAlternatif(req,res) {
         harga : nama_alternatif[i].id_rumah_rumah.harga,
         kamar_tidur : nama_alternatif[i].id_rumah_rumah.kamar_tidur,
         luas_bangunan : nama_alternatif[i].id_rumah_rumah.luas_bangunan,
+        imgPath : nama_alternatif[i].id_rumah_rumah.imgPath,
         hasil : null
       }
     )
@@ -283,14 +284,22 @@ async function vikor(weight) {
   let alternatif1 = alternatif.sort((a,b) => a.hasil-b.hasil);
 
 
+  //mendapatkan kolom kriteria
+  let kriteria = (await models.kriteria.findAll({
+    attributes : ['nama_kriteria']
+  })).map((x)=>{return x.nama_kriteria});
+
   let json = {
     weight : weight,
+    kriteria : kriteria,
     alternatif : alternatif1,
     fmax : fmax,
     fmin : fmin,
     normalisasi : data1,
     S : S,
     R : R,
+    Splus : Splus,
+    Rplus : Rplus,
     Smin : Smin,
     Rmin : Rmin,
     Q : Q

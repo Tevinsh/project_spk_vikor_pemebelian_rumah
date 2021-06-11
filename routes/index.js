@@ -18,6 +18,7 @@ router.use('/user',require('./user'));
 router.use('/dashboard',require('./dashboard'));
 router.use('/agen',require('./agen'));
 router.use('/admin',require('./admin'));
+router.use('/pembeli',require('./pembeli'));
 
 
 const index = function (req, res, next) {

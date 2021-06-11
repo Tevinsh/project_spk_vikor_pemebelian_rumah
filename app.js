@@ -13,6 +13,13 @@ const path = require('path')
 
 app.use(favicon(path.join(__dirname, 'public/assets', 'favicon.png')));
 
+const { queryParser } = require('express-query-parser')
+app.use(
+  queryParser({
+    parseNull: true,
+    parseBoolean: true
+  })
+)
 
 
 app.use(session({ secret: 'myapp', cookie: { maxAge:  24 * 60 * 60 * 1000 }}));

@@ -1,131 +1,163 @@
 <!DOCTYPE html>
 <html>
 <%- include("../../layout/head.ejs") -%>
-<style>
+  <style>
+    body {
+      font-size: .875rem;
+    }
 
-body {
-  font-size: .875rem;
-}
+    .feather {
+      width: 16px;
+      height: 16px;
+      vertical-align: text-bottom;
+    }
 
-.feather {
-  width: 16px;
-  height: 16px;
-  vertical-align: text-bottom;
-}
-
-/*
+    /*
  * Sidebar
  */
 
-.sidebar {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 100; /* Behind the navbar */
-  padding: 0;
-  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
-}
+    .sidebar {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 100;
+      /* Behind the navbar */
+      padding: 0;
+      box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+    }
 
-.sidebar-sticky {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 48px; /* Height of navbar */
-  height: calc(100vh - 48px);
-  padding-top: 1.2rem;
-  overflow-x: hidden;
-  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-}
+    .sidebar-sticky {
+      position: -webkit-sticky;
+      position: sticky;
+      top: 48px;
+      /* Height of navbar */
+      height: calc(100vh - 48px);
+      padding-top: 1.2rem;
+      overflow-x: hidden;
+      overflow-y: auto;
+      /* Scrollable contents if viewport is shorter than content. */
+    }
 
-.sidebar .nav-link {
-  font-weight: 500;
-  color: #333;
-}
+    .sidebar .nav-link {
+      font-weight: 500;
+      color: #333;
+    }
 
-.sidebar .nav-link .feather {
-  margin-right: 4px;
-  color: #999;
-}
+    .sidebar .nav-link .feather {
+      margin-right: 4px;
+      color: #999;
+    }
 
-.sidebar .nav-link.active {
-  color: #007bff;
-}
+    .sidebar .nav-link.active {
+      color: #007bff;
+    }
 
-.sidebar .nav-link:hover .feather,
-.sidebar .nav-link.active .feather {
-  color: inherit;
-}
+    .sidebar .nav-link:hover .feather,
+    .sidebar .nav-link.active .feather {
+      color: inherit;
+    }
 
-.sidebar-heading {
-  font-size: .75rem;
-  text-transform: uppercase;
-}
-
-
+    .sidebar-heading {
+      font-size: .75rem;
+      text-transform: uppercase;
+    }
 
 
 
-/*
+
+
+    /*
  * Utilities
  */
 
-.border-top { border-top: 1px solid #e5e5e5; }
-.border-bottom { border-bottom: 1px solid #e5e5e5; }
-</style>
+    .border-top {
+      border-top: 1px solid #e5e5e5;
+    }
 
-<body>
-  <% if (error) { %>
-    <script>
-      function error() {
-              alert('<%- error %>');
-          }
-      window.onload = error;
-    </script>
-  <% } %>
+    .border-bottom {
+      border-bottom: 1px solid #e5e5e5;
+    }
+  </style>
 
+  <body>
+    <% if (error) { %>
+      <script>
+        function error() {
+          alert('<%- error %>');
+        }
+        window.onload = error;
+      </script>
+      <% } %>
+        <script src="https://code.jquery.com/jquery-3.6.0.js"
+          integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <script>
+          $(document).ready(function () {
+            jQuery.expr[':'].contains = function (a, i, m) {
+              return jQuery(a).text().toUpperCase()
+                .indexOf(m[3].toUpperCase()) >= 0;
+            };
+            $('#cari').keyup(function () {
+              $('.card').removeClass('d-none');
+              var filter = $(this).val(); // get the value of the input, which we filter on
+              $('.cardlist ').find('.card .card-body h5 a:not(:contains("' + filter + '"))').parent().parent().parent().parent().addClass('d-none');
+            })
+          });
+        </script>
 
-<%- include("../../layout/nav.ejs") -%>
-
-
-<%- include("../../layout/agensidebar.ejs") -%>
-
-
-    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-    <div class="container">
-      <input class="form-control form-control-lg mb-2" type="text" placeholder="Cari">
-        <% for(var i = 0; i<rumah.length; i++) {%>
-        <div class="card mb-3" style = "flex-direction: row;">
-
-         <img src = "/uploads/rumah_image/<%- rumah[i].imgPath[0] %>" style = "width: 6cm; height:3.5cm">  
-         <div class="card-body">
-    
-           <div class = "float-left">
-             <h5><a href="/dashboard/view<%- rumah[i].id_rumah%>"><%- rumah[i].judul_iklan %></a></h5>
-             <div class="post-meta"><span class="small lh-120"><i class="bi bi-geo-alt"></i><%- rumah[i].alamat_lokasi %>, <%- rumah[i].wilayah %></span></div>
-           </div>
-           <div class = "row float-right">
-             <div class="col pl-0"><span class="text-muted font-small d-block mb-2">Harga</span> <span class="h5 text-dark font-weight-bold">Rp. <%- rumah[i].harga %></span></div>
-             <div class="col"><span class="text-muted font-small d-block mb-2">Kamar</span> <span class="h5 text-dark font-weight-bold"><%- rumah[i].kamar_tidur %></span></div>
-             <div class="col pr-0"><span class="text-muted font-small d-block mb-2 mr-2">Luas Bangunan</span> <span class="h5 text-dark font-weight-bold"><%- rumah[i].luas_bangunan %> m2</span></div>
-             <button type="button" class="btn btn-lg btn-danger mx-1" style="height:50%;margin-top: 0.5cm;"><i class="bi bi-trash2"></i></button><button type="button" class="btn btn-lg btn-warning mx-1" style="height:50%;margin-top: 0.5cm;"><i class="bi bi-pen"></i></button>
-           </div>
-        
-           </div>
-         </div>
-         <% } %>
-         </div>
-         <%- include("../../layout/footer.ejs") -%>
-         </main>
+        <%- include("../../layout/nav.ejs") -%>
 
 
-</body>
+          <%- include("../../layout/agensidebar.ejs") -%>
+
+
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+              <div class="container">
+                <input class="form-control form-control-lg mb-2" type="text" placeholder="Cari" id="cari">
+                <div class="cardlist">
+                  <% for(var i=0; i<rumah.length; i++) {%>
+                    <div class="card mb-3" style="flex-direction: row;" id="konten">
+
+                      <img src="/uploads/rumah_image/<%- rumah[i].imgPath[0] %>" style="width: 6cm; height:3.5cm">
+                      <div class="card-body">
+
+                        <div class="float-left">
+                          <h5><a href="/dashboard/view<%- rumah[i].id_rumah%>">
+                              <%- rumah[i].judul_iklan %>
+                            </a></h5>
+                          <div class="post-meta"><span class="small lh-120"><i class="bi bi-geo-alt"></i>
+                              <%- rumah[i].alamat_lokasi %>, <%- rumah[i].wilayah %>
+                            </span></div>
+                        </div>
+                        <div class="row float-right">
+                          <div class="col pl-0"><span class="text-muted font-small d-block mb-2">Harga</span> <span
+                              class="h5 text-dark font-weight-bold">Rp. <%- rumah[i].harga %></span></div>
+                          <div class="col"><span class="text-muted font-small d-block mb-2">Kamar</span> <span
+                              class="h5 text-dark font-weight-bold">
+                              <%- rumah[i].kamar_tidur %>
+                            </span></div>
+                          <div class="col pr-0"><span class="text-muted font-small d-block mb-2 mr-2">Luas
+                              Bangunan</span>
+                            <span class="h5 text-dark font-weight-bold">
+                              <%- rumah[i].luas_bangunan %> m2
+                            </span>
+                          </div>
+                          <button
+                            type="button" class="btn btn-sm btn-warning mx-1" style="height:50%;margin-top: 0.5cm;"><i
+                              class="bi bi-pen"></i></button>
+                              <button type="button" class="btn btn-sm btn-danger mx-1"
+                              style="height:50%;margin-top: 0.5cm;"><i class="bi bi-trash2"></i></button>
+                        </div>
+
+                      </div>
+                    </div>
+                    <% } %>
+                </div>
+              </div>
+              <%- include("../../layout/footer.ejs") -%>
+            </main>
+
+
+  </body>
+
 </html>
-
-
-
-
-
-
-
-
-

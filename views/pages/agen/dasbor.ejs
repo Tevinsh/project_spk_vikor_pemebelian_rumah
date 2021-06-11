@@ -1,171 +1,196 @@
 <!DOCTYPE html>
 <html>
 <%- include("../../layout/head.ejs") -%>
-<style>
+  <style>
+    body {
+      font-size: .875rem;
+    }
 
-body {
-  font-size: .875rem;
-}
+    .feather {
+      width: 16px;
+      height: 16px;
+      vertical-align: text-bottom;
+    }
 
-.feather {
-  width: 16px;
-  height: 16px;
-  vertical-align: text-bottom;
-}
-
-/*
+    /*
  * Sidebar
  */
 
-.sidebar {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 100; /* Behind the navbar */
-  padding: 0;
-  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
-}
+    .sidebar {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 100;
+      /* Behind the navbar */
+      padding: 0;
+      box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+    }
 
-.sidebar-sticky {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 48px; /* Height of navbar */
-  height: calc(100vh - 48px);
-  padding-top: 1.2rem;
-  overflow-x: hidden;
-  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-}
+    .sidebar-sticky {
+      position: -webkit-sticky;
+      position: sticky;
+      top: 48px;
+      /* Height of navbar */
+      height: calc(100vh - 48px);
+      padding-top: 1.2rem;
+      overflow-x: hidden;
+      overflow-y: auto;
+      /* Scrollable contents if viewport is shorter than content. */
+    }
 
-.sidebar .nav-link {
-  font-weight: 500;
-  color: #333;
-}
+    .sidebar .nav-link {
+      font-weight: 500;
+      color: #333;
+    }
 
-.sidebar .nav-link .feather {
-  margin-right: 4px;
-  color: #999;
-}
+    .sidebar .nav-link .feather {
+      margin-right: 4px;
+      color: #999;
+    }
 
-.sidebar .nav-link.active {
-  color: #007bff;
-}
+    .sidebar .nav-link.active {
+      color: #007bff;
+    }
 
-.sidebar .nav-link:hover .feather,
-.sidebar .nav-link.active .feather {
-  color: inherit;
-}
+    .sidebar .nav-link:hover .feather,
+    .sidebar .nav-link.active .feather {
+      color: inherit;
+    }
 
-.sidebar-heading {
-  font-size: .75rem;
-  text-transform: uppercase;
-}
-
-
+    .sidebar-heading {
+      font-size: .75rem;
+      text-transform: uppercase;
+    }
 
 
 
-/*
+
+
+    /*
  * Utilities
  */
 
-.border-top { border-top: 1px solid #e5e5e5; }
-.border-bottom { border-bottom: 1px solid #e5e5e5; }
-</style>
+    .border-top {
+      border-top: 1px solid #e5e5e5;
+    }
 
-<body>
-  <% if (error) { %>
-    <script>
-      function error() {
-              alert('<%- error %>');
-          }
-      window.onload = error;
-    </script>
-  <% } %>
+    .border-bottom {
+      border-bottom: 1px solid #e5e5e5;
+    }
+  </style>
 
-<%- include("../../layout/nav.ejs") -%>
+  <body>
+    <% if (error) { %>
+      <script>
+        function error() {
+          alert('<%- error %>');
+        }
+        window.onload = error;
+      </script>
+      <% } %>
 
-<%- include("../../layout/agensidebar.ejs") -%>
+        <%- include("../../layout/nav.ejs") -%>
 
-      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-          <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
+          <%- include("../../layout/agensidebar.ejs") -%>
+
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-12">
                     <h1>Dasbor <small>Rangkuman Statistik</small></h1>
                     <ol class="breadcrumb">
-                        <li class="active"><i class="fa fa-dashboard"></i> Dashboard</li>
+                      <li class="active"><i class="fa fa-dashboard"></i> Dashboard</li>
                     </ol>
+                  </div>
                 </div>
-            </div>
-            <div class="row d-flex justify-content-around">
-                <div class="col-md-3">
+                <div class="row d-flex justify-content-around">
+                  <div class="col-md-3">
                     <div class="panel panel-default ">
-                        <div class="panel-body panel-tw panel-content">
-                            <div class="col-xs-5">
-                                <i class="bi bi-building fa-5x"></i>
-                            </div>
-                            <div class="col-xs-5 text-right">
-                                <i class="fa fa-arrow-circle-right"></i>
-                                <p class="alerts-heading tex">1200</p>
-                                <p class="alerts-text tex">Properti</p>
-                            </div>
+                      <div class="panel-body panel-tw panel-content">
+                        <div class="col-xs-5">
+                          <i class="bi bi-building fa-5x"></i>
                         </div>
+                        <div class="col-xs-5 text-right">
+                          <i class="fa fa-arrow-circle-right"></i>
+                          <p class="alerts-heading tex">
+                            <%- result.propertiCount %>
+                          </p>
+                          <p class="alerts-text tex">Properti</p>
+                        </div>
+                      </div>
                     </div>
-                </div>
-                <div class="col-md-3">
+                  </div>
+                  <div class="col-md-3">
                     <div class="panel panel-default ">
-                        <div class="panel-body panel-fb panel-content">
-                            <div class="col-xs-5">
-                                <i class="bi bi-hand-thumbs-up fa-5x"></i>
-                            </div>
-                            <div class="col-xs-5 text-right">
-                                <i class="fa fa-arrow-circle-right"></i>
-                                <p class="alerts-heading tex ">1234</p>
-                                <p class="alerts-text tex">Disukai</p>
-                            </div>
+                      <div class="panel-body panel-fb panel-content">
+                        <div class="col-xs-5">
+                          <i class="bi bi-hand-thumbs-up fa-5x"></i>
                         </div>
+                        <div class="col-xs-5 text-right">
+                          <i class="fa fa-arrow-circle-right"></i>
+                          <p class="alerts-heading tex ">
+                            <%- result.disukai %>
+                          </p>
+                          <p class="alerts-text tex">Disukai</p>
+                        </div>
+                      </div>
                     </div>
-                </div>
-                <div class="col-md-3">
+                  </div>
+                  <div class="col-md-3">
                     <div class="panel panel-default ">
-                        <div class="panel-body panel-in panel-content">
-                            <div class="col-xs-5">
-                                <i class="bi bi-eye fa-5x"></i>
-                            </div>
-                            <div class="col-xs-5 text-right">
-                                <i class="fa fa-arrow-circle-right"></i>
-                                <p class="alerts-heading tex">800</p>
-                                <p class="alerts-text tex">Properti Dilihat</p>
-                            </div>
+                      <div class="panel-body panel-in panel-content">
+                        <div class="col-xs-5">
+                          <i class="bi bi-eye fa-5x"></i>
                         </div>
+                        <div class="col-xs-5 text-right">
+                          <i class="fa fa-arrow-circle-right"></i>
+                          <p class="alerts-heading tex">
+                            <%- result.dilihat %>x
+                          </p>
+                          <p class="alerts-text tex">Properti Dilihat</p>
+                        </div>
+                      </div>
                     </div>
+                  </div>
                 </div>
-            </div>
-            </div>   
-            
-            <hr>
+              </div>
 
-            <h2>Pengguna yang menyukai properti anda</h2>
-          <div class="table-responsive">
-            <table class="table table-striped table-sm">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1,001</td>
-                  <td>Lorem</td>
-                  <td>ipsum</td>
-                  <td>dolor</td>
-                  <td>sit</td>
-                </tr>
-                <tr>
+              <hr>
+
+              <h2>Pengguna yang menyukai properti anda</h2>
+              <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                  <thead>
+                    <tr>
+                      <th>no</th>
+                      <th>Judul iklan</th>
+                      <th>Nama Calon Pembeli</th>
+                      <th>alamat</th>
+                      <th>no telepon</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% for(var i=0; i<result.dataDisukai.length;i++) {%>
+                      <tr>
+                        <td>
+                          <%- i+1 %>
+                        </td>
+                        <td>
+                          <%- result.dataDisukai[i].judul_iklan %>
+                        </td>
+                        <td>
+                          <%- result.dataDisukai[i].nama_pelanggan %>
+                        </td>
+                        <td>
+                          <%- result.dataDisukai[i].alamat_pelanggan %>
+                        </td>
+                        <td>
+                          <%- result.dataDisukai[i].telepon_pelanggan %>
+                        </td>
+                      </tr>
+                      <% } %>
+                        <!-- <tr>
                   <td>1,002</td>
                   <td>amet</td>
                   <td>consectetur</td>
@@ -234,16 +259,17 @@ body {
                   <td>ligula</td>
                   <td>in</td>
                   <td>libero</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </main>
-    </div>
-  </div>
- 
-<%- include("../../layout/footer.ejs") -%>
+                </tr> -->
+                  </tbody>
+                </table>
+              </div>
+              </div>
+            </main>
+            </div>
+            </div>
 
-</body>
+            <%- include("../../layout/footer.ejs") -%>
+
+  </body>
+
 </html>
