@@ -1,3 +1,41 @@
+<% let daerah = [
+                        "Aceh", 
+                        "Bali", 
+                        "Banten", 
+                        "Bengkulu", 
+                        "DKI Yogyakarta", 
+                        "DI Jakarta", 
+                        "Gorontalo", 
+                        "Jambi", 
+                        "Jawa Barat", 
+                        "Jawa Tengah", 
+                        "Jawa Timur", 
+                        "Kalimantan Barat", 
+                        "Kalimantan Selatan", 
+                        "Kalimantan Tengah", 
+                        "Kalimantan Timur", 
+                        "Kalimantan Utara", 
+                        "Kepulauan Bangka Belitung", 
+                        "Kepulauan Riau", 
+                        "Lampung", 
+                        "Maluku", 
+                        "Maluku Utara", 
+                        "Nusa Tenggara Barat", 
+                        "Nusa Tenggara Timur", 
+                        "Papua", 
+                        "Papua Barat", 
+                        "Riau", 
+                        "Sulawesi Barat", 
+                        "Sulawesi Selatan", 
+                        "Sulawesi Tengah", 
+                        "Sulawesi Tenggara", 
+                        "Sulawesi Utara", 
+                        "Sumatera Barat", 
+                        "Sumatera Selatan", 
+                        "Sumatera Utara"
+                    ] %>
+
+
 <!DOCTYPE html>
 <html>
 <%- include("../layout/head.ejs") -%>
@@ -30,12 +68,11 @@
                     </div>
                     <!--end of col-->
                     <div class="col-auto mx-2">
-                      <select class="form-control" id="exampleFormControlSelect1" placeholder="wilayah">
-                        <option>Berdasarkan Wilayah</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                      <select class="form-control" id="exampleFormControlSelect1" placeholder="wilayah" name="wilayah">
+                        <option value="">Berdasarkan Wilayah</option>
+                        <% for(var i = 0; i<daerah.length;i++) {%>
+                        <option value="<%- daerah[i]%>"><%- daerah[i]%></option>
+                        <% } %>
                       </select>
                     </div>
                     <div class="col-auto">
@@ -87,7 +124,9 @@
     </div>
     </section>
     <% } else { %>
-      <h5>Data tidak ditemukan</h5>
+      <div class = "align-middle text-center" style = "height: 5cm;">
+      <p style = "margin-top: 2.5cm;">Data tidak ditemukan</p>
+      </div>
     <% } %>
     
   </div>

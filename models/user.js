@@ -7,7 +7,7 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true
     },
     password: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.JSON,
       allowNull: true
     },
     user_type: {

@@ -1,3 +1,41 @@
+<% let daerah = [
+                        "Aceh", 
+                        "Bali", 
+                        "Banten", 
+                        "Bengkulu", 
+                        "DKI Yogyakarta", 
+                        "DI Jakarta", 
+                        "Gorontalo", 
+                        "Jambi", 
+                        "Jawa Barat", 
+                        "Jawa Tengah", 
+                        "Jawa Timur", 
+                        "Kalimantan Barat", 
+                        "Kalimantan Selatan", 
+                        "Kalimantan Tengah", 
+                        "Kalimantan Timur", 
+                        "Kalimantan Utara", 
+                        "Kepulauan Bangka Belitung", 
+                        "Kepulauan Riau", 
+                        "Lampung", 
+                        "Maluku", 
+                        "Maluku Utara", 
+                        "Nusa Tenggara Barat", 
+                        "Nusa Tenggara Timur", 
+                        "Papua", 
+                        "Papua Barat", 
+                        "Riau", 
+                        "Sulawesi Barat", 
+                        "Sulawesi Selatan", 
+                        "Sulawesi Tengah", 
+                        "Sulawesi Tenggara", 
+                        "Sulawesi Utara", 
+                        "Sumatera Barat", 
+                        "Sumatera Selatan", 
+                        "Sumatera Utara"
+                    ] %>
+
+
 <!DOCTYPE html>
 <html>
 <%- include("../../layout/head.ejs") -%>
@@ -111,24 +149,24 @@ body {
             <hr>
             <form method="POST" action='/bodychecker3' enctype="multipart/form-data">
             <div class="form-group">
-                <label for="luas_bangunan">Luas Bangunan</label>
-                <input type="text" class="form-control" id="luas_bangunan" name="luas_bangunan">
+                <label for="luas_bangunan">Luas Bangunan(m2)</label>
+                <input type="number" class="form-control" id="luas_bangunan" name="luas_bangunan">
               </div>
             <div class="form-group">
-                <label for="luas_tanah">Luas Tanah</label>
-                <input type="text" class="form-control" id="luas_tanah"name="luas_tanah">
+                <label for="luas_tanah">Luas Tanah(m2)</label>
+                <input type="number" class="form-control" id="luas_tanah"name="luas_tanah">
             </div>
             <div class="form-group">
                 <label for="kamar_tidur">Kamar Tidur</label>
-                <input type="text" class="form-control" id="kamar_tidur" name = "kamar_tidur">
+                <input type="number" class="form-control" id="kamar_tidur" name = "kamar_tidur">
             </div>
             <div class="form-group">
                 <label for="kamar_mandi">Kamar mandi</label>
-                <input type="text" class="form-control" id="kamar_mandi" name= "kamar_mandi">
+                <input type="number" class="form-control" id="kamar_mandi" name= "kamar_mandi">
             </div>
             <div class="form-group">
                 <label for="lantai">lantai</label>
-                <input type="text" class="form-control" id="lantai" name = "lantai">
+                <input type="number" class="form-control" id="lantai" name = "lantai">
             </div>
             <div class="form-group">
                 <label for="pwd">Fasilitas</label><br>
@@ -149,12 +187,24 @@ body {
             </div>
             <div class="form-group">
                 <label for="jenis_sertifikasi">sertifikasi</label>
-                <input type="text" class="form-control" id="jenis_sertifikasi" name="jenis_sertifikasi">
+                <select class="form-control" id="jenis_sertifikasi" name="jenis_sertifikasi">
+                  <option value="SHM">SHM - Sertifikat Hak Milik</option>
+                  <option value="HGB">HGB Hak Guna Bangun</option>
+                  <option value="Lainnya">Lainnya(PPJB,Girik,Adat,dll)</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="alamat_lokasi">alamat lokasi</label>
                 <input type="text" class="form-control" id="alamat_lokasi" name = "alamat_lokasi">
             </div>
+            <div class="form-group">
+              <label for="wilayah">Wilayah</label>
+              <select class="form-control" id="wilayah" placeholder="wilayah" name="wilayah">
+                <% for(var i = 0; i<daerah.length;i++) {%>
+                <option value="<%- daerah[i]%>"><%- daerah[i]%></option>
+                <% } %>
+              </select>
+          </div>
             <div class="form-group">
                 <label for="judul_iklan">judul iklan</label>
                 <input type="text" class="form-control" id="judul_iklan" name="judul_iklan">
@@ -165,7 +215,7 @@ body {
             </div>
             <div class="form-group">
                 <label for="harga">Harga</label>
-                <input type="text" class="form-control" id="harga" name="harga">
+                <input type="number" class="form-control" id="harga" name="harga">
             </div>
             
             <div class="form-group">

@@ -61,6 +61,9 @@ router.post('/upload', function (req, res) {
     })
 })
 
+router.get("/delete:id", async (req, res) => {
+    await agen.delRumah(req, res);
+})
 
 
 module.exports = router;

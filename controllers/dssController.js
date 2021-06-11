@@ -289,10 +289,13 @@ async function vikor(weight) {
     attributes : ['nama_kriteria']
   })).map((x)=>{return x.nama_kriteria});
 
+
+  
   let json = {
     weight : weight,
     kriteria : kriteria,
     alternatif : alternatif1,
+    unsortedalternatif : alternatif,
     fmax : fmax,
     fmin : fmin,
     normalisasi : data1,

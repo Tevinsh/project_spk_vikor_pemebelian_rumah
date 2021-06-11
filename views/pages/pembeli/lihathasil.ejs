@@ -99,6 +99,7 @@
                     <%- include("../../layout/pembelisidebar.ejs") -%>
 
                         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+                            <% if(result.result) {%>
                             <h4>Hasil Pembobotan</h4>
                             <div class="card-group">
                                 <% for(var i =0 ;i<result.result.kriteria.length;i++) {%>
@@ -148,7 +149,7 @@
                                     <% for(var k = 0;k<result.result.alternatif.length;k++) {%>
                                   <tr>
                                     <th scope="row"><%- k+1 %></th>
-                                    <td><%- result.result.alternatif[k].judul_iklan %></td>
+                                    <td><%- result.result.unsortedalternatif[k].judul_iklan %></td>
                                     <% for(var l = 0;l<result.result.kriteria.length;l++) {%>
                                     <td><%- (result.result.normalisasi[k][l]).toFixed(3) %></td>
                                     <% } %>
@@ -156,6 +157,97 @@
                                   <% } %>
                                 </tbody>
                               </table>
+                              <h4>Hasil Utility Measures(S)</h4>
+
+                                <table class="table table-hover">
+                                    <thead>
+                                      <tr>
+                                        <th scope="col">no</th>
+                                        <th scope="col">Alternatif</th>
+                                        <th scope="col">S</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% for(var m = 0;m<result.result.unsortedalternatif.length;m++) {%>
+                                            <tr>
+                                                <th scope="row"><%- m+1 %></th>
+                                                <td><%- result.result.unsortedalternatif[m].judul_iklan %></td>
+                                                <td><%- (result.result.S[m]).toFixed(3) %></td>
+                                              </tr>
+                                            <% } %>
+                                      
+                                    </tbody>
+                                  </table>
+                                <h4>Hasil Regret Measures(R)</h4>
+                                <table class="table table-hover">
+                                    <thead>
+                                      <tr>
+                                        <th scope="col">no</th>
+                                        <th scope="col">Alternatif</th>
+                                        <th scope="col">R</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% for(var n = 0;n<result.result.unsortedalternatif.length;n++) {%>
+                                            <tr>
+                                                <th scope="row"><%- n+1 %></th>
+                                                <td><%- result.result.unsortedalternatif[n].judul_iklan %></td>
+                                                <td><%- (result.result.R[n]).toFixed(3) %></td>
+                                              </tr>
+                                            <% } %>
+                                      
+                                    </tbody>
+                                  </table>
+                                  <h4>Hasil Hitung Maksimum Minimum S & R</h4>
+                                  <div class="card-group">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <p>S+</p>
+                                            <small><%- result.result.Splus %></small>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <p>S-</p>
+                                            <small><%- result.result.Smin %></small>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <p>R+</p>
+                                            <small><%- result.result.Rplus %></small>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <p>R-</p>
+                                            <small><%- result.result.Rmin %></small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4>Hasil Alternatif</h4>
+                                <table class="table table-hover">
+                                    <thead>
+                                      <tr>
+                                        <th scope="col">Rangking</th>
+                                        <th scope="col">Alternatif</th>
+                                        <th scope="col">nilai</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% for(var o = 0;o<result.result.unsortedalternatif.length;o++) {%>
+                                            <tr>
+                                                <th scope="row"><%- o+1 %></th>
+                                                <td><%- result.result.alternatif[o].judul_iklan %></td>
+                                                <td><%- (result.result.alternatif[o].hasil).toFixed(3) %></td>
+                                              </tr>
+                                            <% } %>
+                                      
+                                    </tbody>
+                                  </table>
+                                <% }else{ %>
+                                    <h1>Anda Belum Mengisi Kuesioner, Silahkan Isi Dahulu</h1>
+                                    <% } %>
 
                             <%- include("../../layout/footer.ejs") -%>
                         </main>

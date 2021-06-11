@@ -2,21 +2,57 @@
 const {Sequelize,QueryTypes,Op} = require('sequelize');
 const app = require('../app');
 const { models } = require("../components/database");
+var bcrypt = require('bcrypt');
+var salt = bcrypt.genSaltSync(10);
+const {encrypt,decrypt} = require("../middlewares/encryptor");
 
    
     
       exports.doLogin =  async function (req, res) {  
-        let user = await models.user.findOne({where: {
-          [Op.and]:[
-              {email: req.body.email},
-              {password: req.body.password}
-          ]
-          },raw:true
+        let user = await models.user.findOne({where:  
+              {email: req.body.email}
+          ,raw:true
         })
         if(!user){
           req.session.error = "user atau password salah / tidak ditemukan"
-          res.redirect("/dashview");
-        }else if(user.user_type == "agen"){
+          res.redirect("/dashboard");
+        }else if(user){
+          let hasil = bcrypt.compareSync(req.body.password, user.password);
+          if (hasil == true){
+            if(user.user_type == "agen"){
+              req.session.error = "agen true"
+              let agen = await models.agen.findOne({
+                where : {
+                  email: req.body.email
+                },
+                raw : true
+              })
+              req.session.name = user.email;
+              req.session.user_type = user.user_type;
+              req.session.agen_id = agen.id_agen;
+              res.redirect("/dashboard")
+            }else if(user.user_type == "pembeli"){
+              req.session.error = "pembeli true"
+              let pembeli = await models.pelanggan.findOne({
+                where : {
+                  email: req.body.email
+                },
+                raw : true
+              })
+              req.session.name = user.email;
+              req.session.user_type = user.user_type;
+              req.session.pembeli_id = pembeli.id_pelanggan;
+              res.redirect("/dashboard")
+            }
+          }else{
+            req.session.error = 'password salah'
+            res.redirect('/dashboard');
+          }
+        }
+        
+        
+        
+        /*else if(user.user_type == "agen"){
           req.session.error = "agen true"
           let agen = await models.agen.findOne({
             where : {
@@ -40,7 +76,7 @@ const { models } = require("../components/database");
           req.session.user_type = user.user_type;
           req.session.pembeli_id = pembeli.id_pelanggan;
           res.redirect("/dashview")
-        }
+        } */
         
  /*       await models.user.findOne({where: {
           [Op.and]:[
@@ -67,7 +103,7 @@ const { models } = require("../components/database");
         await models.user.create(
             {
                 email : req.body.email,
-                password: req.body.password,
+                password: bcrypt.hashSync(req.body.password, salt),
                 user_type: req.body.tipe,
             }
         )

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const validator = require('../middlewares/validator');
 const { body, param, query, validationResult } = require("express-validator");
-const agen = require('../controllers/agenController')
+const pembeli = require('../controllers/pembeliController')
 const app = require('../app');
 const path = require('path');
 const vikor =require('../controllers/dssController');
@@ -24,7 +24,27 @@ router.get("/akun", async (req, res) => {
     let pagetitle = "akun"
     let error = null
     let session = req.session
-    res.render("../views/pages/pembeli/akun",{pagetitle : pagetitle,error : session.error,name:session.name,session : session});
+    let result = await pembeli.getPembeli(req,res);
+    res.render("../views/pages/pembeli/akun",{pagetitle : pagetitle,error : session.error,name:session.name,session : session,result : result});
+})
+
+router.post('/upload', function (req, res) {
+    files.name = req.session.name;
+    uploadAvatar(req, res, async function (err) {
+        if (err instanceof multer.MulterError) {
+            res.json(err);
+        } else if (err) {
+            res.json(err);
+        }
+        console.log(req.file);
+        await pembeli.imgUpdate(req, res);
+        res.redirect('/pembeli/akun');
+        // Everything went fine.
+    })
+})
+
+router.post("/update", async (req, res) => {
+    await pembeli.updatePembeli(req, res);
 })
 
 

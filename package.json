@@ -12,6 +12,7 @@
   "dependencies": {
     "apicache": "^1.5.3",
     "axios": "^0.20.0",
+    "bcrypt": "^5.0.1",
     "chai": "^4.2.0",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",

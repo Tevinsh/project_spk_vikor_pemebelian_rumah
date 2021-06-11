@@ -7,14 +7,31 @@ const { models } = require("../components/database");
 
 exports.getHome = async function (req,res){
     console.log(await models.rumah.findAll({raw:true}));
-    if (req.query.search === undefined || req.query.search == null || req.query.search == ""){
+    if (!req.query.search && !req.query.wilayah){
         return await models.rumah.findAll({raw:true});
-    }else{
+    }else if (req.query.search && !req.query.wilayah){
         return await models.rumah.findAll({
             where:{
                 judul_iklan : {
                     [Op.like]: `%`+req.query.search+`%`
                 }
+            },
+            raw:true
+        })
+    }else if (req.query.search && req.query.wilayah){
+        return await models.rumah.findAll({
+            where:{
+                judul_iklan : {
+                    [Op.like]: `%`+req.query.search+`%`
+                },
+                wilayah : req.query.wilayah
+            },
+            raw:true
+        })
+    }else if (!req.query.search && req.query.wilayah){
+        return await models.rumah.findAll({
+            where:{
+                wilayah : req.query.wilayah
             },
             raw:true
         })

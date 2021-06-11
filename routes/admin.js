@@ -11,7 +11,9 @@ router.get("/dashboard", async (req,res)=>{
     let pagetitle = "dashboard";  
     let error = null
     let session = req.session
-    res.render("../views/pages/admin/dashboard",{pagetitle : pagetitle,error: error, name:session.name,session:req.session})
+    let result = await admin.dasbor(req,res);
+    console.log(result);
+    res.render("../views/pages/admin/dasbor",{pagetitle : pagetitle,error: error, name:session.name,session:req.session,result : result})
 })
 
 router.get("/kriteria", async (req,res)=>{
@@ -34,6 +36,10 @@ router.get("/akun", async (req,res)=>{
     let error = null
     let session = req.session
     res.render("../views/pages/admin/akun",{pagetitle : pagetitle,error: error, name:session.name,session:req.session})
+})
+
+router.get("/delete:id", async (req, res) => {
+    await admin.delete(req, res);
 })
 
 

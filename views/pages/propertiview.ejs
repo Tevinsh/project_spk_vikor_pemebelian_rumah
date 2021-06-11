@@ -66,17 +66,17 @@
 
   <!-- informasi -->
 
-  <div class="container-fluid mt-4">
+  <div class="container-fluid mt-4 my-4">
 
-    <div class="row">
+    <div class="row mx-2">
   		<div class="col-sm-9 sticky-top"><!--left col-->
               
 
       <div class="mb-3 mx-3">
       <h3>Rp. <%- result.rumah.harga %></h3>
-      <h6><%- result.rumah.judul_iklan %></h6>
+      <!--<h6><%- result.rumah.judul_iklan %></h6>-->
       <small><%- result.rumah.alamat_lokasi %> , <%- result.rumah.wilayah %></small><br>
-      <small>Pengembang : <a href="#"> Adi Jaya Bangunan </a></small><br><hr>
+      <small>Pengembang : <a href="#">  <%- result.agen.nama %> </a></small><br><hr>
       <div class="d-flex justify-content-around text-center">
         <div>
           <small>luas tanah</small>
@@ -106,7 +106,7 @@
       <h5>Fasilitas</h5>
       <ul>
         <% for(var k = 0;k<result.rumah.fasilitas.length;k++) {%>
-        <li><%-result.rumah.fasilitas[k]%></li>
+        <li> <%-result.rumah.fasilitas[k]%> </li>
         <% } %>
       </ul>
       
@@ -129,7 +129,7 @@
             <button type="button" class="btn btn-warning" id="hubungi"><i class="bi bi-telephone"></i> Hubungi</button>
             <% if(!disukai) {%>
               
-              <a class="btn btn-danger" href="/dashboard/suka?agen=<%- result.rumah.id_agen %>&id_rumah=<%- result.rumah.id_rumah %>&id_pelanggan=<%- id_pelanggan %>" role="button">Sukai</a>
+              <a class="btn btn-danger" href="/dashboard/suka?agen=<%- result.rumah.id_agen %>&id_rumah=<%- result.rumah.id_rumah %>&id_pelanggan=<%- id_pelanggan %>" role="button"><i class="bi bi-heart-fill"></i> Sukai</a>
               
             <% }else{%>
               <a class="align-middle btn btn-light" role="button" disabled><i class="bi bi-heart-fill"></i> disukai</a>

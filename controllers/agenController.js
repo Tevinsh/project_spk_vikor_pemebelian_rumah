@@ -18,6 +18,7 @@ exports.cRumah = async function (req, res, filename) {
         luas_tanah: req.body.luas_tanah,
         kamar_tidur: req.body.kamar_tidur,
         kamar_mandi: req.body.kamar_mandi,
+        wilayah : req.body.wilayah,
         lantai: req.body.lantai,
         fasilitas: req.body.fasilitas,
         jenis_sertifikasi: req.body.jenis_sertifikasi,
@@ -125,5 +126,19 @@ exports.dashboard = async function (req, res) {
         dataDisukai: dataDisukai
     }
 
+}
+
+exports.updateRumah = async function(req,res){
+
+}
+
+exports.delRumah = async function(req,res){
+    await models.rumah.destroy({
+        where: {
+            id_rumah : req.params.id
+        }
+    }).then(()=>{
+        res.redirect('/agen/lihat')
+    })
 }
 
