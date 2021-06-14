@@ -8,10 +8,11 @@ const path = require('path')
 const {uploadAvatar, uploadRumah,files} = require('../controllers/fileUploadController');
 
 router.get("/", async (req,res)=>{
+    let error = req.session.error;
     let pagetitle = "Dashboard";
     req.session.error = null;
     result = await dashboard.getHome(req,res)
-    res.render("../views/pages/dashboard",{name :req.session.name, error: req.session.error, result:result, pagetitle:pagetitle,session:req.session});
+    res.render("../views/pages/dashboard",{name :req.session.name, error: error, result:result, pagetitle:pagetitle,session:req.session});
 })
 
 router.get("/view:id",async (req,res)=>{
