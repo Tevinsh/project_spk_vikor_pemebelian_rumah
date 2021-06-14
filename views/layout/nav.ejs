@@ -35,14 +35,14 @@
             <div class="dropdown-menu">
               <!-- check user type -->
               <% if(session.user_type == "agen") {%>
-              <a class="dropdown-item" href="http://localhost:8080/agen/dashboard">Halaman Agen</a>
-              <a class="dropdown-item" href="http://localhost:8080/user/logout">Logout</a>
+              <a class="dropdown-item" href="/agen/dashboard">Halaman Agen</a>
+              <a class="dropdown-item" href="/user/logout">Logout</a>
               <% }else if(session.user_type == "admin"){ %>
-                <a class="dropdown-item" href="http://localhost:8080/admin/dashboard">Halaman Admin</a>
-                <a class="dropdown-item" href="http://localhost:8080/user/logout">Logout</a>
+                <a class="dropdown-item" href="/admin/dashboard">Halaman Admin</a>
+                <a class="dropdown-item" href="/user/logout">Logout</a>
                 <% }else{ %>
-                  <a class="dropdown-item" href="http://localhost:8080/pembeli/hasil">Halaman Pembeli</a>
-                  <a class="dropdown-item" href="http://localhost:8080/user/logout">Logout</a>
+                  <a class="dropdown-item" href="/pembeli/hasil">Halaman Pembeli</a>
+                  <a class="dropdown-item" href="/user/logout">Logout</a>
                   <%}%>
             </div>
           </div>
