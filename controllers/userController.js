@@ -20,7 +20,7 @@ const {encrypt,decrypt} = require("../middlewares/encryptor");
           let hasil = bcrypt.compareSync(req.body.password, user.password);
           if (hasil == true){
             if(user.user_type == "agen"){
-              req.session.error = "agen true"
+              req.session.error = "Logged in"
               let agen = await models.agen.findOne({
                 where : {
                   email: req.body.email
@@ -32,7 +32,7 @@ const {encrypt,decrypt} = require("../middlewares/encryptor");
               req.session.agen_id = agen.id_agen;
               res.redirect("/dashboard")
             }else if(user.user_type == "pembeli"){
-              req.session.error = "pembeli true"
+              req.session.error = "Logged in"
               let pembeli = await models.pelanggan.findOne({
                 where : {
                   email: req.body.email
@@ -110,7 +110,7 @@ const {encrypt,decrypt} = require("../middlewares/encryptor");
           .catch((err)=>{
             req.session.error = err;
             console.log(err);
-            res.redirect("/dashview");
+            res.redirect("/dashboard");
           }) 
           
           if(req.body.tipe == 'agen'){
@@ -122,12 +122,12 @@ const {encrypt,decrypt} = require("../middlewares/encryptor");
               }
           ).then((result)=>{
             req.session.error = "Sukses";
-             res.redirect("/dashview");      
+             res.redirect("/dashboard");      
            })
            .catch((err)=>{
             req.session.error = err;
             console.log(err);
-             res.redirect("/dashview");
+             res.redirect("/dashboard");
            }) 
           }else if(req.body.tipe == 'pembeli'){
             await models.pelanggan.create(
