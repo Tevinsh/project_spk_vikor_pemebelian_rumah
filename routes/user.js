@@ -14,12 +14,15 @@ router.post("/login",(req, res) => {
 
 router.post("/signup",validator.signupvalidator(), (req,res) => {
     const errors = validationResult(req);
+    console.log("error = "+ JSON.stringify(errors));
     if (!errors.isEmpty()) {
         let extractedErrors = [];
         errors.array().map(err => extractedErrors.push(err.msg));
       req.session.error = extractedErrors;
-      res.redirect("/dashview");
+      console.log(extractedErrors);
+      res.redirect("/dashboard");
     } else {
+      console.log("do signup true")
         user.doSignup(req,res);
     }
     //login.doSignup(req, res);

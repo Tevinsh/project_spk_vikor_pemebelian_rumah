@@ -72,6 +72,9 @@ router.get("/view:id", async (req,res)=>{
   //res.json(await dashboard.rumahView(req,res))
 })
 
+router.post("/bodyparse", async (req,res)=>{
+  res.json(req.body);
+})
 
 
 

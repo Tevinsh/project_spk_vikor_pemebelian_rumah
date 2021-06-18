@@ -11,18 +11,23 @@ exports.signupvalidator = () => {
       return true;
     }
     }).withMessage("password tidak sama"),
-  body('email').custom(val=>{
-    return models.user.findOne({where:{email:val}})
-    .then((result)=>{
+  body('email').custom((value)=>{
+    models.user.findOne({where:{email:value}}).then((result)=>{
       if (result){
-        return false
+        return true;
       }else{
-        return true
+        return false;
       }
     })
-  }).withMessage("email telah terdaftar")
+  }).withMessage("email telah terdaftar"),
+  body("email").exists({checkFalsy: true}).withMessage("email harus ada"),
+  body("password").exists({checkFalsy: true}).withMessage("password harus ada"),
+  body("retypepass").exists({checkFalsy: true}).withMessage("password belum diketik ulang"),
+  body("telepon").exists({checkFalsy: true}).withMessage("nomor telepon harus ada"),
 ]; 
 }
+
+
 
 
 
