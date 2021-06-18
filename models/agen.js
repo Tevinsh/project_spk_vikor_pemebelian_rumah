@@ -19,7 +19,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     deskripsi: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING(5000),
       allowNull: true
     },
     imgPath: {
