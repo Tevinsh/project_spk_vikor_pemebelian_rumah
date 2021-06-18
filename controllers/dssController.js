@@ -87,6 +87,7 @@ const rumah = require('../models/rumah');
 
 
  async function calculateWeight (pairwise){
+   console.log("pairwise : "+ JSON.stringify(pairwise));
   let init = await getKriteria();
   let kriteria = init.map(element => {
     return element.nama_kriteria;
@@ -113,21 +114,8 @@ const rumah = require('../models/rumah');
   //console.log(hasil1)
   y = [];//megosongkan y
 
-  let sum = data.map(element => element.reduce(function(a, b){
-      return a + b;
-  }, 0)); //mendapatkan nilai sum kriteria
-  console.log("result = "+data,sum);
-  
-  //membagi dengan total nilai kriteria (normalisasi part1)
-  for(let i=0;i<kriteria.length;i++){
-      for(let j=0;j<kriteria.length;j++){
-          data[i][j]=data[i][j]/sum[i];
-      }
-  }
-  console.log(data);
-
-  //ubah kolom jadi baris(transpose)
-  for(let i=0;i<kriteria.length;i++){
+    //ubah kolom jadi baris(transpose)
+    for(let i=0;i<kriteria.length;i++){
       for(let j=0;j<kriteria.length;j++){
           //console.log((j+1),(i+1));
           x.push(data[j][i]);
@@ -139,7 +127,20 @@ const rumah = require('../models/rumah');
   y=[];
   console.log(transpose);
 
-  sumnormalisasi = transpose.map(element => element.reduce(function(a, b){
+  let sum = transpose.map(element => element.reduce(function(a, b){
+      return a + b;
+  }, 0)); //mendapatkan nilai sum kriteria
+  console.log("result = "+sum);
+  
+  //membagi dengan total nilai kriteria (normalisasi part1)
+  for(let i=0;i<kriteria.length;i++){
+      for(let j=0;j<kriteria.length;j++){
+          data[i][j]=data[i][j]/sum[j];
+      }
+  }
+  console.log(data);
+
+  sumnormalisasi = data.map(element => element.reduce(function(a, b){
       return a + b;
   }, 0));
   

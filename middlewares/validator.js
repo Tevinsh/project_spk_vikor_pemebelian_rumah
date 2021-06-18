@@ -11,14 +11,12 @@ exports.signupvalidator = () => {
       return true;
     }
     }).withMessage("password tidak sama"),
-  body('email').custom((value)=>{
-    models.user.findOne({where:{email:value}}).then((result)=>{
-      if (result){
-        return true;
-      }else{
-        return false;
-      }
-    })
+  body('email').custom(async (value)=>{
+    let result = await models.user.findOne({where:{email:value}})
+    if (result !== null) {
+      console.log('User Exists');
+      return Promise.reject();
+    }
   }).withMessage("email telah terdaftar"),
   body("email").exists({checkFalsy: true}).withMessage("email harus ada"),
   body("password").exists({checkFalsy: true}).withMessage("password harus ada"),

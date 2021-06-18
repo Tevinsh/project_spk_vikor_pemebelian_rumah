@@ -12,8 +12,8 @@ router.post("/login",(req, res) => {
     user.doLogin(req, res);  
   });
 
-router.post("/signup",validator.signupvalidator(), (req,res) => {
-    const errors = validationResult(req);
+router.post("/signup",validator.signupvalidator(), async (req,res) => {
+    const errors = await validationResult(req);
     console.log("error = "+ JSON.stringify(errors));
     if (!errors.isEmpty()) {
         let extractedErrors = [];

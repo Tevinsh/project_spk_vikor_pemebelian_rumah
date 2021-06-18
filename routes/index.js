@@ -26,12 +26,12 @@ const index = function (req, res, next) {
 } 
 
 
-const vikor = require('../controllers/dssController')
+/*const vikor = require('../controllers/dssController')
 router.get("/bodychecker" ,async (req,res)=>{
   req.session.name = 'test@test.com'
   let result = await vikor.getResult(req,res);
   res.json(result.result.alternatif);
-})
+})*/
 
 const admin = require('../controllers/adminController')
 router.post("/bodychecker1" ,async (req,res)=>{

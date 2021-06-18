@@ -10,7 +10,6 @@ const multer = require('multer');
 const { uploadAvatar, uploadRumah, files } = require('../controllers/fileUploadController');
 
 router.get("/hasil", async (req, res) => {
-    req.session.name = 'test@test.com'
     let pagetitle = "lihat hasil"
     let error = null
     let session = req.session
