@@ -24,74 +24,24 @@ exports.signupvalidator = () => {
   body("telepon").exists({checkFalsy: true}).withMessage("nomor telepon harus ada"),
 ]; 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-exports.postGetCicilan = () => {
+exports.postUpdateProfile = () => {
   return [
-    body("aid").exists().withMessage("aid is required"),
-    body("aid").isNumeric().withMessage("aid is number")
+    body("nama").exists({checkFalsy: true}).withMessage("Nama Harus ada"),
+    body("telepon").exists({checkFalsy: true}).withMessage("nomor telepon Harus ada"),
+    body("deskripsi").exists({checkFalsy: true}).withMessage("Deskripsi Harus ada"),
+    body("tanggal_lahir").exists({checkFalsy: true}).withMessage("Tanggal lahir Harus ada")
   ];
 }
-exports.postTampilUpdateCicilan = () => {
+exports.postKriteria = () => {
   return [
-    body("aid").exists().withMessage("aid is required"),
-    body("aid").isNumeric().withMessage("aid is number"),
-    body("lender_transfer_date").exists().withMessage("aid is required"),
-    body("lender_transfer_date").isISO8601().withMessage("invalid date, please use ISO 8601 format"),
-    body("pstart_date").exists().withMessage("aid is required"),
-    body("pstart_date").isISO8601().withMessage("invalid date, please use ISO 8601 format"),
-    body("pstart_date").isDate({format: 'YYYY-MM-DD'}).withMessage("invalid date, please use YYYY-MM-DD"),
-    body("pstart_date").custom(val => {
-      if ((new Date(val)).getDate()>28) {
-        return false;
-      }else{
-        return true;
+    body("nama_kriteria").exists({checkFalsy: true}).withMessage("Nama kriteria harus diisi"),
+    body('nama_kriteria').custom(async (value)=>{
+      let result = await models.kriteria.findOne({where:{nama_kriteria:value}})
+      if (result !== null) {
+        return Promise.reject();
       }
-    }).withMessage("please insert date below or equal 28")
-  ];
-}
-exports.postUpdateCicilan = () => {
-  return [
-    body("aid").exists().withMessage("aid is required"),
-    body("aid").isNumeric().withMessage("aid is number"),
-    body("pstart_date").exists().withMessage("pstart_date is required"),
-    body("pstart_date").isISO8601().withMessage("invalid date, please use ISO 8601 format"),
-    body("pstart_date").isDate({format: 'YYYY-MM-DD'}).withMessage("invalid date, please use YYYY-MM-DD"),
-    body("pstart_date").custom(val => {
-      if ((new Date(val)).getDate()>28) {
-        return false;
-      }else{
-        return true;
-      }
-    }).withMessage("please insert date below or equal 28"),
-    
+    }).withMessage("kriteria sudah ada"),
+    body("kuesioner").exists({checkFalsy: true}).withMessage("Kuesioner harus diisi")
   ];
 }
 

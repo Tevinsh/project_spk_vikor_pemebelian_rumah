@@ -35,8 +35,17 @@ router.get("/bodychecker" ,async (req,res)=>{
 
 const admin = require('../controllers/adminController')
 router.post("/bodychecker1" ,async (req,res)=>{
-  await admin.cKriteria(req,res);
+  const errors = await validationResult(req);
+  if (!errors.isEmpty()) {
+      let extractedErrors = [];
+      errors.array().map(err => extractedErrors.push(err.msg));
+    req.session.error = extractedErrors;
+    res.redirect("/admin/kriteria");
+  } else {
+    await admin.cKriteria(req,res);
   res.redirect('/admin/kriteria');
+  }
+  
 })
 
 const multer = require('multer');

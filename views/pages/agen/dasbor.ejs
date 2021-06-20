@@ -260,16 +260,22 @@
                   <td>in</td>
                   <td>libero</td>
                 </tr> -->
+                <% if(result.dataDisukai.length==0) {%>
+                  <tr>
+                    <td align="center" colspan="5">Data Tidak ada</td>
+                  </tr>
+                <% } %>
                   </tbody>
                 </table>
               </div>
               </div>
+              <%- include("../../layout/footer.ejs") -%>
+
             </main>
             </div>
             </div>
 
-            <%- include("../../layout/footer.ejs") -%>
-
+            
   </body>
 
 </html>

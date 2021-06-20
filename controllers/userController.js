@@ -43,6 +43,11 @@ const {encrypt,decrypt} = require("../middlewares/encryptor");
               req.session.user_type = user.user_type;
               req.session.pembeli_id = pembeli.id_pelanggan;
               res.redirect("/dashboard")
+            }else if(user.user_type == "admin"){
+              req.session.error = "Logged in"
+              req.session.name = user.email;
+              req.session.user_type = user.user_type;
+              res.redirect("/admin/dashboard")
             }
           }else{
             req.session.error = 'password salah'

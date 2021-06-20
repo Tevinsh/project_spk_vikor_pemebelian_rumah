@@ -34,7 +34,13 @@ exports.profile = async function (req,res){
  }
  
  exports.profileUpdate = async function (req,res){
-     await models.pelanggan.update(req.body, {
+     await models.pelanggan.update(
+         {
+             nama : req.body.nama,
+             telepon : req.body.telepon,
+             tanggal_lahir : req.body.tanggal_lahir,
+             deskripsi : req.body.deskripsi
+         }, {
          where: {
            email : req.session.name
          }
