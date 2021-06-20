@@ -12,12 +12,13 @@ const { uploadAvatar, uploadRumah, files } = require('../controllers/fileUploadC
 router.get("/hasil", async (req, res) => {
     if (req.session.user_type == 'pembeli'){
     let pagetitle = "lihat hasil"
-    let error = null
+    let error = req.session.error
+    req.session.error = null
     let session = req.session
     let result = await vikor.getResult(req,res);
     //res.json(result.result.kriteria.length);
     //console.log(JSON.stringify(result.kriteria));
-    res.render("../views/pages/pembeli/lihathasil",{pagetitle : pagetitle,error : session.error,name:session.name,session : session,result:result});
+    res.render("../views/pages/pembeli/lihathasil",{pagetitle : pagetitle,error : error,name:session.name,session : session,result:result});
     }else{
         req.session.error='anda belum login';
         res.redirect('/dashboard');
@@ -27,10 +28,11 @@ router.get("/hasil", async (req, res) => {
 router.get("/akun", async (req, res) => {
     if (req.session.user_type == 'pembeli'){
     let pagetitle = "akun"
-    let error = null
+    let error = req.session.error
+    req.session.error = null
     let session = req.session
     let result = await pembeli.getPembeli(req,res);
-    res.render("../views/pages/pembeli/akun",{pagetitle : pagetitle,error : session.error,name:session.name,session : session,result : result});
+    res.render("../views/pages/pembeli/akun",{pagetitle : pagetitle,error : error,name:session.name,session : session,result : result});
 }else{
     req.session.error='anda belum login';
     res.redirect('/dashboard');
@@ -57,9 +59,18 @@ router.post('/upload', function (req, res) {
 }
 })
 
-router.post("/update", async (req, res) => {
+router.post("/update",validator.postUpdateProfile(), async (req, res) => {
     if (req.session.user_type == 'pembeli'){
-    await pembeli.updatePembeli(req, res);
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            let extractedErrors = [];
+            errors.array().map(err => extractedErrors.push(err.msg));
+          req.session.error = extractedErrors;
+          console.log("error = "+extractedErrors);
+          res.redirect("/pembeli/akun");
+        } else {
+            await pembeli.updatePembeli(req, res);
+        }
 }else{
     req.session.error='anda belum login';
     res.redirect('/dashboard');
