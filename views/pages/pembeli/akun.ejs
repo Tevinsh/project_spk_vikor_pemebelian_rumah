@@ -103,7 +103,12 @@ body {
     <input type="file" class="text-center center-block file-upload my-2" accept='image/*' name="imgupload">
     <button class="btn btn-primary" type="submit">Ganti</button>
     </form>
-  </div></hr><br>     
+  </div></hr><br>    
+  <% if(!result.nama || !result.deskripsi || !result.tanggal_lahir) {%>
+    <div class="alert alert-warning" role="alert">
+     Mohon lengkapi profil anda terlebih dahulu untuk menggunakan aplikasi.
+    </div>
+    <% } %>     
   <form action="/pembeli/update" method="POST">
     <div class="form-group">
         <label for="jenis_sertifikasi">Nama</label>
