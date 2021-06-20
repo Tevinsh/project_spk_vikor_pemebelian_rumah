@@ -98,13 +98,13 @@
           <div class="container">
             <form action="/user/signup" method="POST">
                   <label for="exampleInputEmail1">Email address</label>
-                  <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                  <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" maxlength="100">
                   <label for="exampleInputPassword1">Password</label>
-                  <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                  <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" maxlength="32">
                   <label for="exampleInputPassword1">Retype Password</label>
-                  <input type="password" name="retypepass" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                  <input type="password" name="retypepass" class="form-control" id="exampleInputPassword1" placeholder="Password" maxlength="32">
                   <label for="exampleInputEmail1">No Telp</label>
-                  <input type="text" name="telepon" class="form-control" id="telepon" aria-describedby="emailHelp" placeholder="Nomor Telepon">
+                  <input type="text" name="telepon" class="form-control" id="telepon" aria-describedby="emailHelp" placeholder="Nomor Telepon" maxlength="13">
                   <p class="mt-4">Daftar Sebagai</p>
                   <input type="radio" name="tipe" id="agen" value="agen">
                   <label for="agen">Agen/developer</label>

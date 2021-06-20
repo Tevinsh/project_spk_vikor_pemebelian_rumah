@@ -113,11 +113,11 @@ body {
   <form action="/agen/update" method="POST">
     <div class="form-group">
         <label for="jenis_sertifikasi">Nama</label>
-        <input type="text" class="form-control" id="jenis_sertifikasi" name="nama" value = "<%-result.nama%>">
+        <input type="text" class="form-control" id="jenis_sertifikasi" name="nama" value = "<%-result.nama%>" maxlength="100">
     </div>
     <div class="form-group">
         <label for="alamat_lokasi">telepon</label>
-        <input type="text" class="form-control" id="alamat_lokasi" name = "telepon" value = "<%-result.telepon%>">
+        <input type="text" class="form-control" id="alamat_lokasi" name = "telepon" value = "<%-result.telepon%>" maxlength="13">
     </div>
     <div class="form-group">
         <label for="judul_iklan">tanggal lahir</label>

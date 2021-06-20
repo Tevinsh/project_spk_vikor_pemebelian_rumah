@@ -22,6 +22,7 @@ exports.signupvalidator = () => {
   body("password").exists({checkFalsy: true}).withMessage("password harus ada"),
   body("retypepass").exists({checkFalsy: true}).withMessage("password belum diketik ulang"),
   body("telepon").exists({checkFalsy: true}).withMessage("nomor telepon harus ada"),
+  body("telepon").isNumeric().withMessage("Harap isi nomor telepon dengan benar")
 ]; 
 }
 exports.postUpdateProfile = () => {
@@ -29,6 +30,7 @@ exports.postUpdateProfile = () => {
     body("nama").exists({checkFalsy: true}).withMessage("Nama Harus ada"),
     body("telepon").exists({checkFalsy: true}).withMessage("nomor telepon Harus ada"),
     body("deskripsi").exists({checkFalsy: true}).withMessage("Deskripsi Harus ada"),
+    body("deskripsi").isLength({max: 5000}).withMessage("Deskripsi Melebihi 5000 karakter"),
     body("tanggal_lahir").exists({checkFalsy: true}).withMessage("Tanggal lahir Harus ada")
   ];
 }
