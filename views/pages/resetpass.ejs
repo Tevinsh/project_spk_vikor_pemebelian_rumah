@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<%- include("../layout/head.ejs") -%>
+<body>
+  <% if (error) { %>
+    <script>
+      function error() {
+              alert('<%- error %>');
+          }
+      window.onload = error;
+    </script>
+  <% } %>
+
+<%- include("../layout/nav.ejs") -%>
+
+<div class="jumbotron d-flex justify-content-center" style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 100%), url(/assets/naomi-hebert-MP0bgaS_d1c-unsplash.jpg); background-size: 100%;padding-top: 10%;padding-bottom: 15%; height: 100vh;">
+        <div class = "card" style="width: 30rem;height:fit-content;">
+          <div class="card-header">
+            <h3>Reset Password</h3>
+          </div>
+          <div class ="card-body">
+            <% if(state == 1) {%>
+            <form action="/user/reset/send" method="POST">
+              <div class="form-group">
+                <label for = "email">
+                  Email terdaftar
+                </label>
+                <input class = "form-control" type="text" id="email" name="email" placeholder="example@example.com">
+              </div>
+              <div class="d-flex justify-content-end">
+                <button class= "btn btn-primary"type="submit">Submit</button>
+              </div>
+              
+            </form>
+            <%} else if(state == 2) { %>
+              <form action="/user/reset/proses" method="POST">
+                <p>reset password untuk <%- email %> Silahkan isi OTP sesuai dengan kode yang dikirimkan melalui email</p>
+                <div class="form-group">
+                  <input class = "form-control" type="text" id="email" name="email" value="<%-email%>" hidden>
+                  <label for = "otp">OTP</label>
+                  <input class = "form-control" type="text" id="otp" name="otp" placeholder="4 digit angka">
+                  <label for = "email">Password</label>
+                  <input class = "form-control" type="password" id="password" name="password" placeholder="Password">
+                  <label for = "email">Retype Password</label>
+                  <input class = "form-control" type="password" id="email" name="retype" placeholder="Retype Password">
+                </div>
+                <div class="d-flex justify-content-end">
+                  <button class= "btn btn-primary"type="submit">Submit</button>
+                </div>
+                
+              </form>
+            <%}%>
+          </div>
+        </div>
+</div>
+
+
+
+ 
+  
+                      
+      </div>
+  </div>
+</div>
+ 
+<%- include("../layout/footer.ejs") -%>
+
+</body>
+</html>

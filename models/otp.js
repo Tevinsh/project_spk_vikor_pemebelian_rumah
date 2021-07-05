@@ -1,27 +1,22 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('user', {
-    email: {
+  return sequelize.define('otp', {
+    id: {
       type: DataTypes.STRING(100),
       allowNull: false,
       primaryKey: true
     },
-    password: {
-      type: DataTypes.JSON,
-      allowNull: true
-    },
-    user_type: {
+    email: {
       type: DataTypes.STRING(100),
       allowNull: true
     },
-    conf_email: {
-      type: DataTypes.STRING(5),
-      allowNull: true,
-      defaultValue: "false"
+    otp: {
+      type: DataTypes.STRING(4),
+      allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'user',
+    tableName: 'otp',
     timestamps: false,
     indexes: [
       {
@@ -29,7 +24,7 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "email" },
+          { name: "id" },
         ]
       },
     ]

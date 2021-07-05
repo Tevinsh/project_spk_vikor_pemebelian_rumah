@@ -5,8 +5,38 @@ const { models } = require("../components/database");
 var bcrypt = require('bcrypt');
 var salt = bcrypt.genSaltSync(10);
 const {encrypt,decrypt} = require("../middlewares/encryptor");
+const smtpTransport = require('nodemailer-smtp-transport');
+const nodemailer = require('nodemailer');
 
-   
+function generateOTP() {
+          
+  // Declare a digits variable 
+  // which stores all digits
+  var digits = '0123456789';
+  let OTP = '';
+  for (let i = 0; i < 4; i++ ) {
+      OTP += digits[Math.floor(Math.random() * 10)];
+  }
+  return OTP;
+}
+async function sendOTP(otp,req,res) {
+  let transporter = nodemailer.createTransport(smtpTransport({    
+    service: 'gmail',
+    host: 'smtp.gmail.com', 
+    auth: {        
+         user: 'spkvikora@gmail.com',        
+         pass: 'Superman@123'    
+    }
+  }));
+  const mailOptions = {
+    from: 'spkvikora@gmail.com',
+    to: req.body.email,                   // from req.body.to
+    subject: 'konfirmasi OTP',         //from req.body.subject
+    text: `kode otp anda adalah ${otp}`             //from req.body.message
+};
+//delivery
+transporter.sendMail(mailOptions);
+}
     
       exports.doLogin =  async function (req, res) {  
         let user = await models.user.findOne({where:  
@@ -18,7 +48,7 @@ const {encrypt,decrypt} = require("../middlewares/encryptor");
           res.redirect("/dashboard");
         }else if(user){
           let hasil = bcrypt.compareSync(req.body.password, user.password);
-          if (hasil == true){
+          if (hasil == true && user.conf_email == 'true'){
             if(user.user_type == "agen"){
               req.session.error = "Logged in"
               let agen = await models.agen.findOne({
@@ -49,6 +79,9 @@ const {encrypt,decrypt} = require("../middlewares/encryptor");
               req.session.user_type = user.user_type;
               res.redirect("/admin/dashboard")
             }
+          }else if(hasil == true && user.conf_email == 'false'){
+            req.session.error = "anda belum konfirmasi email, Silahkan cek email yang telah anda daftarkan";
+            res.redirect(`/user/otp?e=${req.body.email}`);
           }else{
             req.session.error = 'password salah'
             res.redirect('/dashboard');
@@ -119,15 +152,18 @@ const {encrypt,decrypt} = require("../middlewares/encryptor");
           }) 
           
           if(req.body.tipe == 'agen'){
+            let otp = generateOTP();
+            await models.otp.create({id : 'jjs'+Date.now(),email : req.body.email,otp: otp});
+            sendOTP(otp,req,res);
             await models.agen.create(
               {
                   id_agen : 'AA'+ Date.now(),
                   email : req.body.email,
                   telepon: req.body.telepon
               }
-          ).then((result)=>{
-            req.session.error = "Sukses";
-             res.redirect("/dashboard");      
+          ).then(()=>{
+           
+            res.redirect(`/user/otp?e=${req.body.email}`);
            })
            .catch((err)=>{
             req.session.error = err;
@@ -135,6 +171,9 @@ const {encrypt,decrypt} = require("../middlewares/encryptor");
              res.redirect("/dashboard");
            }) 
           }else if(req.body.tipe == 'pembeli'){
+            let otp = generateOTP();
+            await models.otp.create({id : 'jjs'+Date.now(),email : req.body.email,otp: otp});
+            sendOTP(otp,req,res);
             await models.pelanggan.create(
               {
                   id_pelanggan : 'BB'+ Date.now(),
@@ -142,8 +181,7 @@ const {encrypt,decrypt} = require("../middlewares/encryptor");
                   telepon: req.body.telepon
               }
           ).then((result)=>{
-              req.session.error = "Sukses";
-             res.redirect("/dashboard");
+            res.redirect(`/user/otp?e=${req.body.email}`);
            })
            .catch((err)=>{
             req.session.error = err;
@@ -152,3 +190,53 @@ const {encrypt,decrypt} = require("../middlewares/encryptor");
            }) 
           }
       };
+
+      exports.verifyOtp = async function (req,res){
+        let result = await models.otp.findOne({where : {
+          email : req.body.e,
+          otp : req.body.otp
+        }});
+        if (result){
+          await models.user.update({conf_email : 'true'},{where : {email : req.body.e}})
+          await models.otp.destroy({
+            where : {
+              email : req.body.e,
+              otp : req.body.otp
+            }
+          }).then(()=>{
+            req.session.error = "sukses";
+            res.redirect('/dashboard');
+          })
+        }else{
+          req.session.error = "otp salah";
+          res.redirect(`/user/otp?e=${req.body.e}`);
+        }
+      }
+
+      exports.resetPass = async function (req,res){
+        let otp = generateOTP();
+        await models.otp.create({id : 'jjs'+Date.now(),email : req.body.email,otp: otp});
+        sendOTP(otp,req,res)
+        req.session.error = "OTP berhasil dikirim"
+        res.redirect(`/user/reset/${req.body.email}`);
+      }
+
+      exports.passUpdateNew = async function (req,res){
+        await models.user.update({password: bcrypt.hashSync(req.body.password, salt)},{where : {email: req.body.email}})
+        .then(()=>{
+          req.session.error = "Sukses mengubah Password"
+        })
+        .catch(()=>{
+          req.session.error = "Gagal Merubah Password"
+        });
+      }
+
+      exports.passUpdate = async function (req,res){
+        await models.user.update({password: bcrypt.hashSync(req.body.passbaru, salt)},{where : {email: req.session.name}})
+        .then(()=>{
+          req.session.error = "Sukses mengubah Password"
+        })
+        .catch(()=>{
+          req.session.error = "Gagal Merubah Password"
+        });
+      }

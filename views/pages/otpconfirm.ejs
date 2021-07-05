@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<%- include("../layout/head.ejs") -%>
+<body>
+  <% if (error) { %>
+    <script>
+      function error() {
+              alert('<%- error %>');
+          }
+      window.onload = error;
+    </script>
+  <% } %>
+
+<%- include("../layout/nav.ejs") -%>
+
+<div class="jumbotron" style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 100%), url(/assets/naomi-hebert-MP0bgaS_d1c-unsplash.jpg); background-size: 100%;padding-top: 10%;padding-bottom: 15%; height: 100vh;">
+        <h1 class="display-4 text-center text-light">Halo <%- email %></h1><br>
+        <p class="lead text-center text-light">Satu langkah lagi untuk menggunakan aplikasi anda mohon isi OTP yang telah dikirimkan melalui email.</p><br>
+        <form action = '/user/otp/verify' method = 'POST' class="form-inline d-flex justify-content-center mx-1">
+          <input type="text" class="form-control mx-sm-3 mb-2" id="email" placeholder="OTP" value="<%- email %>" name="e" hidden>  
+          <input type="text" class="form-control mx-sm-3 mb-2" id="otp" placeholder="OTP" name="otp">
+            <button type="submit" class="btn btn-primary mb-2">Konfirmasi</button>
+        </form>
+</div>
+
+
+
+ 
+  
+                      
+      </div>
+  </div>
+</div>
+ 
+<%- include("../layout/footer.ejs") -%>
+
+</body>
+</html>

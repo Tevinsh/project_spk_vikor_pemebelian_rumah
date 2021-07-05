@@ -34,7 +34,20 @@
                         "Sumatera Selatan", 
                         "Sumatera Utara"
                     ] %>
-
+<% function harga(value){
+  if (value<1000000){
+    return Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR" }).format(value);
+  }else if (value > 999999 && value < 999999999){
+    return value/1000000+"JT"
+  }else if (value > 999999999 && value < 999999999999){
+    return value/1000000000+"M"
+  }else if (value > 999999999999){
+    return value/1000000000000+"T"
+  }
+  else{
+    return value
+  }
+} %>
 
 <!DOCTYPE html>
 <html>
@@ -94,12 +107,12 @@
     <% if (result.length !== 0) { %>
     <section class="pt-5 pb-5">
       <div class="container">
-        <div class="row mb-md-2 d-flex justify-content-center">
+        <div class="row row-eq-height mb-md-2 d-flex justify-content-center">
           <% for (var i = 0; i < result.length; i++) { %>
             <div class="col-md-6 col-lg-4">
                 <div class="card shadow-sm border-light mb-4" style="height: 30rem;">
                     <a href="/dashboard/view<%-result[i].id_rumah%>" class="position-relative">
-                        <img src="/uploads/rumah_image/<%- result[i].imgPath[0]%>" class="card-img-top" alt="image" width="350" height="200"> </a>
+                        <img src="/uploads/rumah_image/<%- result[i].imgPath[0]%>" class="card-img-top" onerror="this.onerror=null;this.src='https://dummyimage.com/350x200/ffffff/9a9bb3&text=Agen+Belum+Menambahkan+Gambar';" width="350" height="200"> </a>
                     <div class="card-body d-flex flex-column">
                         <a href="/dashboard/view<%-result[i].id_rumah%>">
                             <h5 class="font-weight-normal"><%- result[i].judul_iklan %></h5>
@@ -107,9 +120,9 @@
                         <div class="post-meta"><span class="small lh-120"><i class="bi bi-geo-alt"></i><%- result[i].alamat_lokasi %>, <%- result[i].wilayah %></span></div>
                         <p class="small lh-120 text-justify"><%- (result[i].deskripsi).length > 177 ? (result[i].deskripsi).substring(0,177)+"..." : result[i].deskripsi %></p>
                         <div class="d-flex justify-content-between mt-auto">
-                            <div class="col pl-0"><span class="text-muted font-small d-block mb-2">Harga</span> <span class="h5 text-dark font-weight-bold">Rp. <%- Math.abs(result[i].harga) > 999999 ? Math.sign(result[i].harga)*((Math.abs(result[i].harga)/1000000).toFixed(1)) + 'jt' : Math.sign(result[i].harga)*Math.abs(result[i].harga) %></span></div>
-                            <div class="col"><span class="text-muted font-small d-block mb-2">Kamar</span> <span class="h5 text-dark font-weight-bold"><%- result[i].kamar_tidur %></span></div>
-                            <div class="col pr-0"><span class="text-muted font-small d-block mb-2">Luas Bangunan</span> <span class="h5 text-dark font-weight-bold"><%- result[i].luas_bangunan %> m2</span></div>
+                            <div class="col-md"><span class="text-muted font-small d-block mb-2"><i class="bi bi-cash-coin"></i> Harga</span> <span class="h6 text-dark"><%- harga(result[i].harga)%></span></div>
+                            <div class="col-md"><span class="text-muted font-small d-block mb-2"><i class="bi bi-door-open"></i> Kamar</span> <span class="h6 text-dark"><%- result[i].kamar_tidur %></span></div>
+                            <div class="col-md"><span class="text-muted font-small d-block mb-2"><i class="bi bi-building"></i> Luas Bangunan</span> <span class="h6 text-dark"><%- result[i].luas_bangunan %> m2</span></div>
                         </div>
                     </div>
                 </div>

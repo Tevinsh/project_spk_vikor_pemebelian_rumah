@@ -128,6 +128,28 @@ body {
     </div>
     <button class="btn btn-primary" type="submit">Simpan</button>
   </form>
+  <br>
+  <hr>
+  <div class="gantipassword">
+    <h3>Ganti Password</h3>
+    <form action="/user/pembeli/updatePassword" method="POST">
+      <div class="form-group">
+        <label for="passwordlama">Password Sekarang</label>
+        <input type="password" class="form-control" id="passwordlama" name="passlama">
+    </div>
+    <div class="form-group">
+      <label for="passwordbaru">Password Baru</label>
+      <input type="password" class="form-control" id="passwordbaru" name="passbaru">
+  </div>
+  <div class="form-group">
+    <label for="passwordbaru">Ketik Ulang Password Baru</label>
+    <input type="password" class="form-control" id="passwordbaru" name="retpassbaru">
+</div>
+<div class="d-flex justify-content-end"><button class="btn btn-primary" type="submit">Simpan</button>
+</div>
+
+    </form>
+  </div>
 
    
  

@@ -1,3 +1,7 @@
+<% function rupiah(value){
+  return Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR" }).format(value);
+}%>
+
 <!DOCTYPE html>
 <html>
 <%- include("../layout/head.ejs") -%>
@@ -48,7 +52,7 @@
       <div class="carousel-item <% if(i==0){%>
         active
       <%}%> ">
-        <img class="d-block mx-auto" src="/uploads/rumah_image/<%- result.rumah.imgPath[i]%>" alt="<%- result.rumah.imgPath[i]%>">
+        <img class="d-block mx-auto" src="/uploads/rumah_image/<%- result.rumah.imgPath[i]%>" onerror="this.onerror=null;this.src='https://dummyimage.com/600x400/ffffff/9a9bb3&text=Agen+Belum+Menambahkan+Gambar';" alt="<%- result.rumah.imgPath[i]%>">
       </div>
       <%}%>
     </div>
@@ -73,7 +77,7 @@
               
 
       <div class="mb-3 mx-3">
-      <h3>Rp. <%- result.rumah.harga %></h3>
+      <h3><%- rupiah(result.rumah.harga) %></h3>
       <!--<h6><%- result.rumah.judul_iklan %></h6>-->
       <small><%- result.rumah.alamat_lokasi %> , <%- result.rumah.wilayah %></small><br>
       <small>Pengembang : <a href="#">  <%- result.agen.nama %> </a></small><br><hr>

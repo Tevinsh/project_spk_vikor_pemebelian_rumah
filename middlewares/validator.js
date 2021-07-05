@@ -1,5 +1,7 @@
 const { body, param, query, validationResult } = require("express-validator");
 const { models } = require("../components/database");
+var bcrypt = require('bcrypt');
+var salt = bcrypt.genSaltSync(10);
 
 exports.signupvalidator = () => {
   // return [body("email").exists({checkFalsy: true}).withMessage("email is required")];
@@ -44,6 +46,51 @@ exports.postKriteria = () => {
       }
     }).withMessage("kriteria sudah ada"),
     body("kuesioner").exists({checkFalsy: true}).withMessage("Kuesioner harus diisi")
+  ];
+}
+
+exports.resetPassword = () => {
+  return [
+    body('email').custom(async (value)=>{
+      let result = await models.user.findOne({where:{email:value}})
+      if (result == null) {
+        return Promise.reject();
+      }
+    }).withMessage("email belum terdaftar")
+  ];
+}
+
+exports.prosesResetPassword = () => {
+  return [
+    body('otp').custom(async (value ,{req})=>{
+      let result = await models.otp.findOne({where:{email:req.body.email,otp:value}})
+      if (result == null) {
+        return Promise.reject();
+      }
+    }).withMessage("OTP tidak ada atau kadaluarsa")
+  ];
+}
+
+exports.updatePass = () => {
+  return [
+    body('passlama').custom(async (value,{req})=>{
+      let result = await models.user.findOne({where:{email:req.session.name},attribute : ['password']})
+      console.log(result);
+      let hasil = bcrypt.compareSync(value, result.password)
+      if (hasil !== true) {
+        return Promise.reject();
+      }
+    }).withMessage("password lama salah"),
+    body('retpassbaru').custom((value, { req }) => {
+      if (value !== req.body.passbaru) {
+        return false;
+      }else{
+        return true;
+      }
+      }).withMessage("password baru tidak sama"),
+      body("passlama").exists({checkFalsy: true}).withMessage("Password lama belum diisi"),
+      body("passbaru").exists({checkFalsy: true}).withMessage("Password baru belum diisi"),
+      body("retpassbaru").exists({checkFalsy: true}).withMessage("Password baru belum diketik ulang")
   ];
 }
 

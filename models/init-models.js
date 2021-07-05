@@ -2,6 +2,7 @@ var DataTypes = require("sequelize").DataTypes;
 var _agen = require("./agen");
 var _alternatif = require("./alternatif");
 var _kriteria = require("./kriteria");
+var _otp = require("./otp");
 var _pelanggan = require("./pelanggan");
 var _rumah = require("./rumah");
 var _suka = require("./suka");
@@ -11,6 +12,7 @@ function initModels(sequelize) {
   var agen = _agen(sequelize, DataTypes);
   var alternatif = _alternatif(sequelize, DataTypes);
   var kriteria = _kriteria(sequelize, DataTypes);
+  var otp = _otp(sequelize, DataTypes);
   var pelanggan = _pelanggan(sequelize, DataTypes);
   var rumah = _rumah(sequelize, DataTypes);
   var suka = _suka(sequelize, DataTypes);
@@ -35,6 +37,7 @@ function initModels(sequelize) {
     agen,
     alternatif,
     kriteria,
+    otp,
     pelanggan,
     rumah,
     suka,
